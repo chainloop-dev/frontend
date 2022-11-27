@@ -1,4 +1,6 @@
-ChainLoop UI frontend source code
+# ChainLoop UI frontend source code
+
+> Work in progress web interface under active development
 
 ## Prerequisites
 

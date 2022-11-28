@@ -12,8 +12,8 @@ import { WorkflowItem } from "../../../gen/controlplane/v1/response_messages";
 import Link from "next/link";
 import { Box } from "@mui/system";
 import { formatDistanceToNow } from "date-fns";
-import WorkflowRunStatus from "../../workflow-view/runs-info/run-status";
-import { IStatus } from "../../workflow-view/runs-info/run-status/run-status";
+import WorkflowRunStatus from "../../workflow-view/workflow-runs/detail/run-status";
+import { IStatus } from "../../workflow-view/workflow-runs/detail/run-status/run-status";
 import { useRouter } from "next/navigation";
 
 export const WorkflowListResults = ({

@@ -8,7 +8,7 @@ import { WorkflowItem } from "../../../../gen/controlplane/v1/response_messages"
 import { Container } from "@mui/material";
 import WorkflowViewToolbar from "../../../../components/workflow-view/toolbar";
 import WorkflowSummary from "../../../../components/workflow-view/summary";
-import RunsInfo from "../../../../components/workflow-view/runs-info";
+import WorflowRuns from "../../../../components/workflow-view/workflow-runs";
 import { Box } from "@mui/system";
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { id: string } }) {
         <Box mb="10px">
           <WorkflowSummary wf={workflow!}></WorkflowSummary>
         </Box>
-        {workflow && <RunsInfo workflowID={workflow?.id} />}
+        {workflow && <WorflowRuns workflowID={workflow?.id} />}
       </Container>
     </WithLoader>
   );

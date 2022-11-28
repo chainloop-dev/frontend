@@ -1,17 +1,20 @@
 import { AttestationItem } from "../../../../../gen/controlplane/v1/response_messages";
 import { Grid } from "@mui/material";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export const AttestationInfo = ({
   attestation,
 }: {
   attestation: AttestationItem;
 }) => {
-  console.log(envelope(attestation));
-  console.log(statement(attestation));
-
   return (
-    <Grid container spacing={2} sx={{ mt: "5px" }}>
-      <Grid item>{JSON.stringify(statement(attestation))}</Grid>
+    <Grid container>
+      <Grid item xs={12} sx={{ fontSize: "12px" }}>
+        <SyntaxHighlighter language="json" style={theme}>
+          {JSON.stringify(statement(attestation), null, 2)}
+        </SyntaxHighlighter>
+      </Grid>
     </Grid>
   );
 };

@@ -1,0 +1,21 @@
+name: Build and Test PR
+
+on:
+  pull_request:
+
+jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Build
+        run: make build
+      - name: Lint
+        run: make lint
+      - name: Test
+        run: make test

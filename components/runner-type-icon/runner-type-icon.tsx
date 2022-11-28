@@ -1,15 +1,21 @@
-import { Icon as Iconify } from "@iconify/react";
+import { Icon, IconifyIcon } from "@iconify/react";
+import gitlabIcon from "@iconify/icons-mdi/gitlab";
+import githubIcon from "@iconify/icons-mdi/github";
 
 export const RunnerTypeIcon = ({ runnerType }: { runnerType: string }) => {
-  var icon: string = "";
+  var icon: IconifyIcon | null = null;
   switch (runnerType) {
     case "GITHUB_ACTION":
-      icon = "github";
+      icon = githubIcon;
       break;
     case "GITLAB_PIPELINE":
-      icon = "gitlab";
+      icon = gitlabIcon;
       break;
   }
 
-  return <Iconify icon={`mdi:${icon}`} />;
+  if (!icon) {
+    return <></>;
+  }
+
+  return <Icon icon={icon} />;
 };

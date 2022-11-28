@@ -33,6 +33,7 @@
     "typescript": "^4.4.4"
   },
   "devDependencies": {
+    "@iconify/icons-mdi": "^1.2.34",
     "@iconify/react": "^4.0.0",
     "@typescript-eslint/parser": "^5.0.1",
     "autoprefixer": "^10.4.13",

@@ -24,7 +24,7 @@ You can run the development server by invoking
 make run
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result
 
 ### Pre-packaged container images
 

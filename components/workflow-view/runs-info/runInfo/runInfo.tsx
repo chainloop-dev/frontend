@@ -1,6 +1,17 @@
-import { Typography, Button, Card, CardContent, Grid } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Grid,
+  Button,
+  TableContainer,
+  Table,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@mui/material";
 import { useAuth } from "../../../../contexts/auth";
 import WithLoader from "../../../with-loader";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 import { useWorkflowRunDescribe } from "../../../../lib/apiclient/workflowRuns";
 import { format, formatDistance } from "date-fns";
@@ -17,49 +28,89 @@ export const RunInfo = ({ runID }: { runID: string }) => {
 
   return (
     <WithLoader loading={isLoading}>
-      <Card>
-        <CardContent>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item xs={3}>
-              <Typography sx={{ fontSize: 14 }}>Initialized at</Typography>
-              <Typography>
-                {run ? format(run?.createdAt!, "Pp") : ""}
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              {run && run.finishedAt && (
-                <>
-                  <Typography sx={{ fontSize: 14 }}>Finished at</Typography>
-                  <Typography>
-                    {format(run.finishedAt, "Pp")} (
-                    {formatDistance(run.finishedAt, run.createdAt!)})
-                  </Typography>
-                </>
-              )}
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ fontSize: 14 }}>Status</Typography>
-              {run && (
-                <WorkflowRunStatus
-                  status={run?.state as IStatus}
-                ></WorkflowRunStatus>
-              )}
-            </Grid>
-            <Grid item xs={3} sx={{ textAlign: "center" }}>
-              {run && run.jobUrl && (
-                <Button
-                  color="inherit"
-                  href={run.jobUrl}
-                  target="_blank"
-                  startIcon={<RunnerTypeIcon runnerType={run.runnerType} />}
-                >
-                  Job Info
-                </Button>
-              )}
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+      <Grid
+        container
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+        sx={{ mt: "5px" }}
+      >
+        <Grid item md={6} xs={12}>
+          <TableContainer>
+            <Table size="small">
+              <TableBody>
+                <TableRow>
+                  <TableCell>Started</TableCell>
+                  <TableCell>
+                    {run ? format(run?.createdAt!, "Pp") : ""}
+                  </TableCell>
+                </TableRow>
+                {run && run.finishedAt && (
+                  <TableRow>
+                    <TableCell>Finished</TableCell>
+                    <TableCell>
+                      {format(run.finishedAt, "Pp")} (
+                      {formatDistance(run.finishedAt, run.createdAt!)} )
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <TableContainer>
+            <Table size="small">
+              <TableBody>
+                <TableRow>
+                  <TableCell>Status</TableCell>
+                  <TableCell>
+                    {run && (
+                      <WorkflowRunStatus
+                        status={run?.state as IStatus}
+                      ></WorkflowRunStatus>
+                    )}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Runner Type</TableCell>
+                  <TableCell>
+                    {run && !run.jobUrl && (
+                      <Typography>Not specified</Typography>
+                    )}
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      {run && run.jobUrl && (
+                        <Button
+                          color="inherit"
+                          href={run.jobUrl}
+                          target="_blank"
+                          endIcon={<OpenInNewIcon />}
+                        >
+                          <RunnerTypeIcon runnerType={run.runnerType} />
+                          <Typography sx={{ pl: "5px" }}>
+                            {humanizeRunnerType(run.runnerType)}
+                          </Typography>
+                        </Button>
+                      )}
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </WithLoader>
   );
+};
+
+const humanizeRunnerType = (runnerType: string): string => {
+  switch (runnerType) {
+    case "GITHUB_ACTION":
+      return "Github Action";
+    case "GITLAB_PIPELINE":
+      return "Gitlab";
+    default:
+      return "not specified";
+  }
 };

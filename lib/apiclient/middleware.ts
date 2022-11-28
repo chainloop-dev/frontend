@@ -10,13 +10,19 @@ export const apiErrorMiddleware: Middleware = (useSWRNext: SWRHook) => (key, fet
     const err = <GrpcWebError>swr.error;
     const { logout } = useAuth()
 
-    if (err && err.code && err.code == grpc.Code.Unauthenticated) {
-        console.log("authentication error", "code", err.code, "message", err.cause, "cause", err.message)
-        if (logout) {
-            console.log("logging out")
-            logout()
+    if (err && err.code) {
+        console.log("API error handled - code=\"%s\" message=\"%s\" cause=\"%s\"", err.code, err.cause, err.message)
+        if (err.code == grpc.Code.Unauthenticated) {
+            if (logout) {
+                console.log("logging out")
+                logout()
+            }
+        } else if (err.code == grpc.Code.PermissionDenied) {
+            // Throw to capture it using an error boundary
+            throw (err)
         }
     }
 
     return swr
+
 }

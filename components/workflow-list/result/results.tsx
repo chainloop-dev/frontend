@@ -1,5 +1,3 @@
-import PerfectScrollbar from "react-perfect-scrollbar";
-import PropTypes from "prop-types";
 import {
   Table,
   TableBody,
@@ -49,8 +47,4 @@ export const WorkflowListResults = ({
       </Table>
     </TableContainer>
   );
-};
-
-WorkflowListResults.propTypes = {
-  workflows: PropTypes.array.isRequired,
 };

@@ -14,12 +14,18 @@ import { Box } from "@mui/system";
 import { formatDistanceToNow } from "date-fns";
 import WorkflowRunStatus from "../../workflow-view/runs-info/run-status";
 import { IStatus } from "../../workflow-view/runs-info/run-status/run-status";
+import { useRouter } from "next/navigation";
 
 export const WorkflowListResults = ({
   workflows,
 }: {
   workflows?: WorkflowItem[];
 }) => {
+  const router = useRouter();
+
+  const redirectToWorkflow = (workflowID: string) => () =>
+    router.push(`/dashboard/workflows/${workflowID}`);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 1050 }}>
@@ -34,12 +40,13 @@ export const WorkflowListResults = ({
         </TableHead>
         <TableBody>
           {workflows?.map((workflow) => (
-            <TableRow hover key={workflow.id}>
-              <TableCell>
-                <Link href={`/dashboard/workflows/${workflow.id}`}>
-                  {workflow.name}
-                </Link>
-              </TableCell>
+            <TableRow
+              hover
+              key={workflow.id}
+              onClick={redirectToWorkflow(workflow.id)}
+              sx={{ cursor: "pointer" }}
+            >
+              <TableCell>{workflow.name}</TableCell>
               <TableCell>{workflow.project}</TableCell>
               <TableCell>{workflow.team}</TableCell>
               <TableCell>{workflow.createdAt?.toDateString()}</TableCell>

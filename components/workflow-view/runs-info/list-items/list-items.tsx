@@ -11,7 +11,6 @@ import WarningIcon from "@mui/icons-material/Warning";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { ReactNode, useEffect, useState } from "react";
-import { grey } from "@mui/material/colors";
 import { WorkflowRunItem } from "../../../../gen/controlplane/v1/response_messages";
 
 export const ListItems = ({
@@ -66,9 +65,6 @@ export const ListItems = ({
             divider
             selected={selected}
             onClick={() => setCurrentRun(run.id)}
-            sx={{
-              borderRight: selected ? "none" : `1px solid ${grey[300]}`,
-            }}
           >
             <Tooltip title={run.state}>
               <ListItemIcon sx={{ label: "asd" }}>

@@ -1,4 +1,4 @@
-import { AttestationItem } from "../../../../../gen/controlplane/v1/response_messages";
+import { AttestationItem } from "@pb/controlplane/v1/response_messages";
 import { Grid } from "@mui/material";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";

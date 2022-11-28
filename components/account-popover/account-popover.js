@@ -2,7 +2,7 @@
 
 import PropTypes from "prop-types";
 import { Box, MenuItem, MenuList, Popover, Typography } from "@mui/material";
-import { useAuth } from "../../contexts/auth";
+import { useAuth } from "@contexts/auth";
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;

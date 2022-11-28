@@ -1,5 +1,5 @@
 import ApiClient, { swrResp } from "./client";
-import { ContextServiceCurrentResponse, ContextServiceClientImpl } from "../../gen/controlplane/v1/context";
+import { ContextServiceCurrentResponse, ContextServiceClientImpl } from "@pb/controlplane/v1/context";
 import useSWR from 'swr'
 
 export function useCurrentUser(client: ApiClient | undefined) {

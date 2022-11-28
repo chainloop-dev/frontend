@@ -14,11 +14,6 @@ export const WorkflowListToolbar = () => (
       <Typography sx={{ m: 1 }} variant="h4">
         Workflows
       </Typography>
-      <Box sx={{ m: 1 }}>
-        <Button color="primary" variant="contained">
-          Add Workflow
-        </Button>
-      </Box>
     </Box>
   </Box>
 );

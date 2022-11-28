@@ -1,8 +1,8 @@
 "use client";
 
 import { Middleware, SWRHook } from 'swr'
-import { useAuth } from '../../contexts/auth';
-import { GrpcWebError } from "../../gen/controlplane/v1/status";
+import { useAuth } from '@contexts/auth';
+import { GrpcWebError } from "@pb/controlplane/v1/status";
 import { grpc } from "@improbable-eng/grpc-web";
 
 export const apiErrorMiddleware: Middleware = (useSWRNext: SWRHook) => (key, fetcher, config) => {

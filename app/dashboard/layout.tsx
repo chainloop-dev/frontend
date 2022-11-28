@@ -3,11 +3,11 @@
 // These styles apply to every route in the application
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
-import AuthGuard from "../../components/auth-guard";
-import DashboardNavbar from "../../components/dashboard-navbar";
-import DashboardSidebar from "../../components/dashboard-sidebar";
+import AuthGuard from "@components/auth-guard";
+import DashboardNavbar from "@components/dashboard-navbar";
+import DashboardSidebar from "@components/dashboard-sidebar";
 import { Box } from "@mui/material";
-import ErrorBoundary from "../../components/error-boundary";
+import ErrorBoundary from "@components/error-boundary";
 
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   display: "flex",

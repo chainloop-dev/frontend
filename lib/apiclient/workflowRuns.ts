@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import ApiClient, { swrResp } from "./client";
-import { WorkflowRunServiceClientImpl, WorkflowRunServiceListResponse, WorkflowRunServiceViewResponse } from '../../gen/controlplane/v1/workflowrun';
+import { WorkflowRunServiceClientImpl, WorkflowRunServiceListResponse, WorkflowRunServiceViewResponse } from '@pb/controlplane/v1/workflowrun';
 
 export function useWorkflowRunsList(workflowID: string, client: ApiClient | undefined) {
   const shouldFetch = client != undefined

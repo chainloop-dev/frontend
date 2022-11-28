@@ -1,4 +1,4 @@
-import { GrpcWebError, GrpcWebImpl } from "../../gen/controlplane/v1/status";
+import { GrpcWebError, GrpcWebImpl } from "@pb/controlplane/v1/status";
 import { grpc } from "@improbable-eng/grpc-web";
 
 class ApiClient {

@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import ApiClient, { swrResp } from "./client";
-import { WorkflowServiceListResponse, WorkflowServiceClientImpl } from "../../gen/controlplane/v1/workflow";
+import { WorkflowServiceListResponse, WorkflowServiceClientImpl } from "@pb/controlplane/v1/workflow";
 
 export function useWorkflows(client: ApiClient | undefined) {
   const shouldFetch = client != undefined

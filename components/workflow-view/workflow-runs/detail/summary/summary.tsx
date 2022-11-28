@@ -10,7 +10,7 @@ import {
   TableBody,
 } from "@mui/material";
 
-import { WorkflowRunItem } from "../../../../../gen/controlplane/v1/response_messages";
+import { WorkflowRunItem } from "@pb/controlplane/v1/response_messages";
 import { format, formatDistance } from "date-fns";
 import WorkflowRunStatus from "../run-status";
 import { IStatus } from "../run-status/run-status";

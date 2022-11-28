@@ -1,7 +1,7 @@
 "use client";
 
-import ApiClient from "../../lib/apiclient/client";
-import { useInfo } from "../../lib/apiclient/status";
+import ApiClient from "../@lib/apiclient/client";
+import { useInfo } from "../@lib/apiclient/status";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { Google as GoogleIcon } from "../../icons/google";
 

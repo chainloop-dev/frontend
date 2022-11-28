@@ -9,10 +9,10 @@ import {
 import { useState } from "react";
 import RunsListSidebar from "./list-sidebar";
 import RunDetail from "./detail";
-import { useAuth } from "../../../contexts/auth";
-import { useWorkflowRunsList } from "../../../lib/apiclient/workflowRuns";
+import { useAuth } from "@contexts/auth";
+import { useWorkflowRunsList } from "@lib/apiclient/workflowRuns";
 import WithLoader from "../../with-loader";
-import { WorkflowRunItem } from "../../../gen/controlplane/v1/response_messages";
+import { WorkflowRunItem } from "@pb/controlplane/v1/response_messages";
 
 export const WorkflowRuns = ({ workflowID }: { workflowID: string }) => {
   const [currentRunID, setCurrentRunID] = useState("");

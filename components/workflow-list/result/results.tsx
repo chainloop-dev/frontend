@@ -8,7 +8,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { WorkflowItem } from "../../../gen/controlplane/v1/response_messages";
+import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
 import Link from "next/link";
 import { Box } from "@mui/system";
 import { formatDistanceToNow } from "date-fns";

@@ -1,11 +1,11 @@
 "use client";
 
-import { useWorkflows } from "../../../lib/apiclient/workflows";
-import { useAuth } from "../../../contexts/auth";
+import { useWorkflows } from "@lib/apiclient/workflows";
+import { useAuth } from "@contexts/auth";
 import { Box, Container } from "@mui/material";
-import WorkflowListToolbar from "../../../components/workflow-list/toolbar";
-import WorkflowListResults from "../../../components/workflow-list/result";
-import WithLoader from "../../../components/with-loader";
+import WorkflowListToolbar from "@components/workflow-list/toolbar";
+import WorkflowListResults from "@components/workflow-list/result";
+import WithLoader from "@components/with-loader";
 
 export default function WorkflowsList() {
   const { apiClient } = useAuth();

@@ -11,6 +11,7 @@ Some of the functionality is not implemented yet. For now, to complete the exper
 The UI is built on top of react + nextjs so the following requirements need to be present.
 
 - `nodejs > 16`
+- `nvm use`
 - `yarn`
 
 The UI connects to a ChainLoop Control Plane backend through `grpc`. It comes pre-configured pointing to ChainLoops production server but it can be changed by modifying [`.env.development`](.env.development) and [`.env.production`](.env.production) environment files.

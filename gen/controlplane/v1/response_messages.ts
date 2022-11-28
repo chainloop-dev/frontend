@@ -65,6 +65,21 @@ export interface AttestationItem {
   createdAt?: Date;
   /** encoded DSEE envelope */
   envelope: Uint8Array;
+  /** denormalized envelope/statement content */
+  envVars: AttestationItem_EnvVariable[];
+  materials: AttestationItem_Material[];
+}
+
+export interface AttestationItem_EnvVariable {
+  name: string;
+  value: string;
+}
+
+export interface AttestationItem_Material {
+  name: string;
+  value: string;
+  /** Material type, i.e ARTIFACT */
+  type: string;
 }
 
 export interface WorkflowContractItem {
@@ -350,7 +365,7 @@ export const WorkflowRunItem = {
 };
 
 function createBaseAttestationItem(): AttestationItem {
-  return { id: "", createdAt: undefined, envelope: new Uint8Array() };
+  return { id: "", createdAt: undefined, envelope: new Uint8Array(), envVars: [], materials: [] };
 }
 
 export const AttestationItem = {
@@ -363,6 +378,12 @@ export const AttestationItem = {
     }
     if (message.envelope.length !== 0) {
       writer.uint32(26).bytes(message.envelope);
+    }
+    for (const v of message.envVars) {
+      AttestationItem_EnvVariable.encode(v!, writer.uint32(34).fork()).ldelim();
+    }
+    for (const v of message.materials) {
+      AttestationItem_Material.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -383,6 +404,12 @@ export const AttestationItem = {
         case 3:
           message.envelope = reader.bytes();
           break;
+        case 4:
+          message.envVars.push(AttestationItem_EnvVariable.decode(reader, reader.uint32()));
+          break;
+        case 5:
+          message.materials.push(AttestationItem_Material.decode(reader, reader.uint32()));
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -396,6 +423,12 @@ export const AttestationItem = {
       id: isSet(object.id) ? String(object.id) : "",
       createdAt: isSet(object.createdAt) ? fromJsonTimestamp(object.createdAt) : undefined,
       envelope: isSet(object.envelope) ? bytesFromBase64(object.envelope) : new Uint8Array(),
+      envVars: Array.isArray(object?.envVars)
+        ? object.envVars.map((e: any) => AttestationItem_EnvVariable.fromJSON(e))
+        : [],
+      materials: Array.isArray(object?.materials)
+        ? object.materials.map((e: any) => AttestationItem_Material.fromJSON(e))
+        : [],
     };
   },
 
@@ -405,6 +438,16 @@ export const AttestationItem = {
     message.createdAt !== undefined && (obj.createdAt = message.createdAt.toISOString());
     message.envelope !== undefined &&
       (obj.envelope = base64FromBytes(message.envelope !== undefined ? message.envelope : new Uint8Array()));
+    if (message.envVars) {
+      obj.envVars = message.envVars.map((e) => e ? AttestationItem_EnvVariable.toJSON(e) : undefined);
+    } else {
+      obj.envVars = [];
+    }
+    if (message.materials) {
+      obj.materials = message.materials.map((e) => e ? AttestationItem_Material.toJSON(e) : undefined);
+    } else {
+      obj.materials = [];
+    }
     return obj;
   },
 
@@ -413,6 +456,133 @@ export const AttestationItem = {
     message.id = object.id ?? "";
     message.createdAt = object.createdAt ?? undefined;
     message.envelope = object.envelope ?? new Uint8Array();
+    message.envVars = object.envVars?.map((e) => AttestationItem_EnvVariable.fromPartial(e)) || [];
+    message.materials = object.materials?.map((e) => AttestationItem_Material.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseAttestationItem_EnvVariable(): AttestationItem_EnvVariable {
+  return { name: "", value: "" };
+}
+
+export const AttestationItem_EnvVariable = {
+  encode(message: AttestationItem_EnvVariable, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): AttestationItem_EnvVariable {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAttestationItem_EnvVariable();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        case 2:
+          message.value = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AttestationItem_EnvVariable {
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
+  },
+
+  toJSON(message: AttestationItem_EnvVariable): unknown {
+    const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<AttestationItem_EnvVariable>, I>>(object: I): AttestationItem_EnvVariable {
+    const message = createBaseAttestationItem_EnvVariable();
+    message.name = object.name ?? "";
+    message.value = object.value ?? "";
+    return message;
+  },
+};
+
+function createBaseAttestationItem_Material(): AttestationItem_Material {
+  return { name: "", value: "", type: "" };
+}
+
+export const AttestationItem_Material = {
+  encode(message: AttestationItem_Material, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
+    }
+    if (message.type !== "") {
+      writer.uint32(26).string(message.type);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): AttestationItem_Material {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAttestationItem_Material();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        case 2:
+          message.value = reader.string();
+          break;
+        case 3:
+          message.type = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AttestationItem_Material {
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+      type: isSet(object.type) ? String(object.type) : "",
+    };
+  },
+
+  toJSON(message: AttestationItem_Material): unknown {
+    const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.value !== undefined && (obj.value = message.value);
+    message.type !== undefined && (obj.type = message.type);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<AttestationItem_Material>, I>>(object: I): AttestationItem_Material {
+    const message = createBaseAttestationItem_Material();
+    message.name = object.name ?? "";
+    message.value = object.value ?? "";
+    message.type = object.type ?? "";
     return message;
   },
 };

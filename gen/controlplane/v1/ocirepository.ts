@@ -2,6 +2,7 @@
 import { grpc } from "@improbable-eng/grpc-web";
 import { BrowserHeaders } from "browser-headers";
 import _m0 from "protobufjs/minimal";
+import { Timestamp } from "../../google/protobuf/timestamp";
 
 export const protobufPackage = "controlplane.v1";
 

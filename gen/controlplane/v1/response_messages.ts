@@ -57,6 +57,7 @@ export interface WorkflowRunItem {
   reason: string;
   workflow?: WorkflowItem;
   jobUrl: string;
+  runnerType: string;
 }
 
 export interface AttestationItem {
@@ -233,6 +234,7 @@ function createBaseWorkflowRunItem(): WorkflowRunItem {
     reason: "",
     workflow: undefined,
     jobUrl: "",
+    runnerType: "",
   };
 }
 
@@ -258,6 +260,9 @@ export const WorkflowRunItem = {
     }
     if (message.jobUrl !== "") {
       writer.uint32(58).string(message.jobUrl);
+    }
+    if (message.runnerType !== "") {
+      writer.uint32(66).string(message.runnerType);
     }
     return writer;
   },
@@ -290,6 +295,9 @@ export const WorkflowRunItem = {
         case 7:
           message.jobUrl = reader.string();
           break;
+        case 8:
+          message.runnerType = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -307,6 +315,7 @@ export const WorkflowRunItem = {
       reason: isSet(object.reason) ? String(object.reason) : "",
       workflow: isSet(object.workflow) ? WorkflowItem.fromJSON(object.workflow) : undefined,
       jobUrl: isSet(object.jobUrl) ? String(object.jobUrl) : "",
+      runnerType: isSet(object.runnerType) ? String(object.runnerType) : "",
     };
   },
 
@@ -320,6 +329,7 @@ export const WorkflowRunItem = {
     message.workflow !== undefined &&
       (obj.workflow = message.workflow ? WorkflowItem.toJSON(message.workflow) : undefined);
     message.jobUrl !== undefined && (obj.jobUrl = message.jobUrl);
+    message.runnerType !== undefined && (obj.runnerType = message.runnerType);
     return obj;
   },
 
@@ -334,6 +344,7 @@ export const WorkflowRunItem = {
       ? WorkflowItem.fromPartial(object.workflow)
       : undefined;
     message.jobUrl = object.jobUrl ?? "";
+    message.runnerType = object.runnerType ?? "";
     return message;
   },
 };

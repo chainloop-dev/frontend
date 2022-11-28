@@ -13,8 +13,8 @@ function getWorkflowRuns(workflowID: string, apiClient: ApiClient): Promise<Work
   return client.List({ workflowId: workflowID })
 }
 
-export function useWorkflowRunsDescribe(runID: string, client: ApiClient | undefined) {
-  const shouldFetch = client != undefined
+export function useWorkflowRunDescribe(runID: string, client: ApiClient | undefined) {
+  const shouldFetch = client != undefined && runID != ""
   const { data, error } = useSWR(shouldFetch ? ["workflow-run-describe", runID] : null, (k: string) => describeWorkflowRun(runID, client!))
   return swrResp(data, error)
 }

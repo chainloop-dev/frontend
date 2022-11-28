@@ -6,9 +6,14 @@ import {
   Paper,
   TableContainer,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { WorkflowItem } from "../../../gen/controlplane/v1/response_messages";
 import Link from "next/link";
+import { Box } from "@mui/system";
+import { formatDistanceToNow } from "date-fns";
+import WorkflowRunStatus from "../../workflow-view/runs-info/run-status";
+import { IStatus } from "../../workflow-view/runs-info/run-status/run-status";
 
 export const WorkflowListResults = ({
   workflows,
@@ -24,8 +29,7 @@ export const WorkflowListResults = ({
             <TableCell>Project</TableCell>
             <TableCell>Team</TableCell>
             <TableCell>Created at</TableCell>
-            <TableCell># runs</TableCell>
-            <TableCell>Last run status</TableCell>
+            <TableCell>Last run</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -39,8 +43,20 @@ export const WorkflowListResults = ({
               <TableCell>{workflow.project}</TableCell>
               <TableCell>{workflow.team}</TableCell>
               <TableCell>{workflow.createdAt?.toDateString()}</TableCell>
-              <TableCell>{workflow.runsCount}</TableCell>
-              <TableCell>{workflow.lastRun?.state}</TableCell>
+              <TableCell>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  {workflow.lastRun && (
+                    <WorkflowRunStatus
+                      status={workflow.lastRun.state as IStatus}
+                    />
+                  )}
+                  {workflow.lastRun && workflow.lastRun?.finishedAt && (
+                    <Typography>
+                      {formatDistanceToNow(workflow.lastRun.finishedAt)} ago
+                    </Typography>
+                  )}
+                </Box>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

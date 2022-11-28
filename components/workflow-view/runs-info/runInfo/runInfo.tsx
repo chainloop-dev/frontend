@@ -1,16 +1,17 @@
 import { Typography, Button, Card, CardContent, Grid } from "@mui/material";
 import { useAuth } from "../../../../contexts/auth";
 import WithLoader from "../../../with-loader";
-import { useWorkflowRunsDescribe } from "../../../../lib/apiclient/workflowRuns";
+
+import { useWorkflowRunDescribe } from "../../../../lib/apiclient/workflowRuns";
 import { format, formatDistance } from "date-fns";
 
 import WorkflowRunStatus from "../run-status";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { IStatus } from "../run-status/run-status";
+import RunnerTypeIcon from "../../../runner-type-icon";
 
 export const RunInfo = ({ runID }: { runID: string }) => {
   const { apiClient } = useAuth();
-  const { isLoading, data } = useWorkflowRunsDescribe(runID, apiClient);
+  const { isLoading, data } = useWorkflowRunDescribe(runID, apiClient);
 
   const run = data?.result?.workflowRun;
 
@@ -50,9 +51,9 @@ export const RunInfo = ({ runID }: { runID: string }) => {
                   color="inherit"
                   href={run.jobUrl}
                   target="_blank"
-                  endIcon={<OpenInNewIcon />}
+                  startIcon={<RunnerTypeIcon runnerType={run.runnerType} />}
                 >
-                  Link to Job
+                  Job Info
                 </Button>
               )}
             </Grid>

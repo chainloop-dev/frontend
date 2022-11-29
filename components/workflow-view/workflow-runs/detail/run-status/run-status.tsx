@@ -1,4 +1,4 @@
-import { Chip } from "@mui/material";
+import { capitalize, Chip } from "@mui/material";
 
 export type IStatus = "error" | "canceled" | "success" | "intitialized";
 
@@ -15,9 +15,24 @@ export const WorkflowRunStatus = ({ status }: { status?: IStatus }) => {
   return (
     <Chip
       sx={{ borderRadius: 0, mr: 1 }}
-      label={status}
+      label={hStatus(status)}
       size="small"
       color={selectedColor}
     />
   );
+};
+
+const hStatus = (state: string) => {
+  var res = state;
+
+  switch (state) {
+    case "initialized":
+      res = "in progress";
+      break;
+    case "error":
+      res = "failure";
+      break;
+  }
+
+  return capitalize(res);
 };

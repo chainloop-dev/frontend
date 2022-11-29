@@ -18,8 +18,8 @@ export const RunDetail = ({ runID }: { runID: string }) => {
       {run && <WorkflowRunSummary run={run} />}
       {attestation && <AttestationInfo attestation={attestation} />}
       {!attestation && (
-        <Typography variant="h5" align="center" mt={4}>
-          This workflow run does not have attestation yet
+        <Typography variant="h5" align="center" m={4}>
+          The attestation crafting is in progress. Not been received yet.
         </Typography>
       )}
     </WithLoader>

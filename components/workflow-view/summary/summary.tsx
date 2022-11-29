@@ -8,19 +8,19 @@ export const WorkflowSummary = ({ wf }: { wf: WorkflowItem }) => {
       <CardContent>
         <Grid container>
           <Grid item xs={3}>
-            <Typography sx={{ fontSize: 14 }}>Name</Typography>
+            <Typography variant="overline">Name</Typography>
             <Typography>{wf.name}</Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography sx={{ fontSize: 14 }}>Project</Typography>
+            <Typography variant="overline">Project</Typography>
             <Typography>{wf.project}</Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography sx={{ fontSize: 14 }}>Team</Typography>
+            <Typography variant="overline">Team</Typography>
             <Typography>{wf.team || "none"}</Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography sx={{ fontSize: 14 }}>Created At</Typography>
+            <Typography variant="overline">Created At</Typography>
             <Typography>{wf.createdAt?.toDateString()}</Typography>
           </Grid>
         </Grid>

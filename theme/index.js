@@ -43,6 +43,17 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          textTransform: "Capitalize",
+        },
+        overline: {
+          fontWeight: "600",
+          textTransform: "Uppercase",
+        },
+      },
+    },
     MuiButtonBase: {
       defaultProps: {
         disableRipple: true,

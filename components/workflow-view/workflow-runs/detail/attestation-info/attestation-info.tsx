@@ -12,12 +12,10 @@ import {
   TableRow,
   TableHead,
   TableCell,
-  Divider,
 } from "@mui/material";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useState } from "react";
-import { Container } from "@mui/system";
 
 export const AttestationInfo = ({
   attestation,
@@ -99,54 +97,58 @@ const TabPanel = (props: TabPanelProps) => {
 const AttestationSummary = ({ att }: { att: AttestationItem }) => {
   return (
     <>
-      <Paper sx={{ margin: "10px", padding: "10px" }}>
-        <Toolbar disableGutters>
-          <Typography variant="h6">Materials</Typography>
-        </Toolbar>
-        <TableContainer>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Value</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {att.materials.map((m) => (
-                <TableRow key={m.name}>
-                  <TableCell sx={{ minWidth: "200px" }}>{m.name}</TableCell>
-                  <TableCell sx={{ minWidth: "100px" }}>{m.type}</TableCell>
-                  <TableCell>{m.value}</TableCell>
+      {att.materials.length > 0 && (
+        <Paper sx={{ margin: "10px", padding: "10px" }}>
+          <Toolbar disableGutters>
+            <Typography variant="h6">Materials</Typography>
+          </Toolbar>
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Type</TableCell>
+                  <TableCell>Value</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-      <Paper sx={{ margin: "10px", padding: "10px" }}>
-        <Toolbar disableGutters>
-          <Typography variant="h6">Environment Variables</Typography>
-        </Toolbar>
-        <TableContainer>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Value</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {att.envVars.map((e) => (
-                <TableRow key={e.name}>
-                  <TableCell sx={{ minWidth: "200px" }}>{e.name}</TableCell>
-                  <TableCell>{e.value}</TableCell>
+              </TableHead>
+              <TableBody>
+                {att.materials.map((m) => (
+                  <TableRow key={m.name}>
+                    <TableCell sx={{ minWidth: "200px" }}>{m.name}</TableCell>
+                    <TableCell sx={{ minWidth: "100px" }}>{m.type}</TableCell>
+                    <TableCell>{m.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      )}
+      {att.envVars.length > 0 && (
+        <Paper sx={{ margin: "10px", padding: "10px" }}>
+          <Toolbar disableGutters>
+            <Typography variant="h6">Environment Variables</Typography>
+          </Toolbar>
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Value</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+              </TableHead>
+              <TableBody>
+                {att.envVars.map((e) => (
+                  <TableRow key={e.name}>
+                    <TableCell sx={{ minWidth: "200px" }}>{e.name}</TableCell>
+                    <TableCell>{e.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      )}
     </>
   );
 };

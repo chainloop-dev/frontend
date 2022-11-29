@@ -1,8 +1,23 @@
 import { AttestationItem } from "@pb/controlplane/v1/response_messages";
-import { Box, Tabs, Tab, Divider } from "@mui/material";
+import {
+  Box,
+  Tabs,
+  Tab,
+  TableContainer,
+  Paper,
+  TableBody,
+  Table,
+  Toolbar,
+  Typography,
+  TableRow,
+  TableHead,
+  TableCell,
+  Divider,
+} from "@mui/material";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useState } from "react";
+import { Container } from "@mui/system";
 
 export const AttestationInfo = ({
   attestation,
@@ -32,7 +47,7 @@ export const AttestationInfo = ({
         <Tab label="Envelope" />
       </Tabs>
       <TabPanel index={0} value={selectedTab}>
-        "TODO"
+        <AttestationSummary att={attestation} />
       </TabPanel>
       <TabPanel index={1} value={selectedTab}>
         <Codehighlighter data={statement(attestation)} />
@@ -78,5 +93,60 @@ const TabPanel = (props: TabPanelProps) => {
     <div role="tabpanel" hidden={value !== index}>
       {value === index && children}
     </div>
+  );
+};
+
+const AttestationSummary = ({ att }: { att: AttestationItem }) => {
+  return (
+    <>
+      <Paper sx={{ margin: "10px", padding: "10px" }}>
+        <Toolbar disableGutters>
+          <Typography variant="h6">Materials</Typography>
+        </Toolbar>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Value</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {att.materials.map((m) => (
+                <TableRow key={m.name}>
+                  <TableCell sx={{ minWidth: "200px" }}>{m.name}</TableCell>
+                  <TableCell sx={{ minWidth: "100px" }}>{m.type}</TableCell>
+                  <TableCell>{m.value}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+      <Paper sx={{ margin: "10px", padding: "10px" }}>
+        <Toolbar disableGutters>
+          <Typography variant="h6">Environment Variables</Typography>
+        </Toolbar>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Value</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {att.envVars.map((e) => (
+                <TableRow key={e.name}>
+                  <TableCell sx={{ minWidth: "200px" }}>{e.name}</TableCell>
+                  <TableCell>{e.value}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </>
   );
 };

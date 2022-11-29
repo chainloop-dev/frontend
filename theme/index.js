@@ -48,16 +48,6 @@ export const theme = createTheme({
         disableRipple: true,
       },
     },
-    MuiCardContent: {
-      styleOverrides: {
-        root: {
-          padding: "32px 24px",
-          "&:last-child": {
-            paddingBottom: "32px",
-          },
-        },
-      },
-    },
     MuiCardHeader: {
       defaultProps: {
         titleTypographyProps: {
@@ -108,29 +98,6 @@ export const theme = createTheme({
       styleOverrides: {
         notchedOutline: {
           borderColor: "#E6E8F0",
-        },
-      },
-    },
-    MuiTableHead: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "#F3F4F6",
-          ".MuiTableCell-root": {
-            color: "#374151",
-          },
-          borderBottom: "none",
-          "& .MuiTableCell-root": {
-            borderBottom: "none",
-            fontSize: "12px",
-            fontWeight: 600,
-            lineHeight: 1,
-            letterSpacing: 0.5,
-            textTransform: "uppercase",
-          },
-          "& .MuiTableCell-paddingCheckbox": {
-            paddingTop: 4,
-            paddingBottom: 4,
-          },
         },
       },
     },

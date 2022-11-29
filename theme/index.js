@@ -49,6 +49,7 @@ export const theme = createTheme({
           textTransform: "Capitalize",
         },
         overline: {
+          color: "#374151",
           fontWeight: "600",
           textTransform: "Uppercase",
         },

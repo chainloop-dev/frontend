@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
 
 export const WorkflowViewToolbar = () => (
-  <Typography variant="h4">Workflow info</Typography>
+  <Typography variant="h3">Workflow info</Typography>
 );

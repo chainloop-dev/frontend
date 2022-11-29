@@ -31,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
     <WithLoader loading={isLoading || !workflow}>
       <Container maxWidth={false}>
         <WorkflowViewToolbar></WorkflowViewToolbar>
-        <Box mb="10px">
+        <Box mb="20px">
           <WorkflowSummary wf={workflow!}></WorkflowSummary>
         </Box>
         {workflow && <WorflowRuns workflowID={workflow?.id} />}

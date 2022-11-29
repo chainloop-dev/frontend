@@ -4,7 +4,7 @@ import WithLoader from "../../../with-loader";
 import { useWorkflowRunDescribe } from "@lib/apiclient/workflowRuns";
 import WorkflowRunSummary from "./summary";
 import AttestationInfo from "./attestation-info";
-import { Typography, Box } from "@mui/material";
+import { Typography } from "@mui/material";
 
 export const RunDetail = ({ runID }: { runID: string }) => {
   const { apiClient } = useAuth();

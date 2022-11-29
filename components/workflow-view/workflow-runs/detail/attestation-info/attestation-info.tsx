@@ -12,12 +12,10 @@ import {
   TableRow,
   TableHead,
   TableCell,
-  Divider,
 } from "@mui/material";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useState } from "react";
-import { Container } from "@mui/system";
 
 export const AttestationInfo = ({
   attestation,

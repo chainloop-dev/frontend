@@ -4,7 +4,7 @@ import { WorkflowRunServiceClientImpl, WorkflowRunServiceListResponse, WorkflowR
 
 export function useWorkflowRunsList(workflowID: string, client: ApiClient | undefined) {
   const shouldFetch = client != undefined
-  const { data, error } = useSWR(shouldFetch ? ["workflow-runs", workflowID] : null, (k: string) => getWorkflowRuns(workflowID, client!))
+  const { data, error } = useSWR(shouldFetch ? ["workflow-runs", workflowID] : null, (_: string) => getWorkflowRuns(workflowID, client!))
   return swrResp(data, error)
 }
 
@@ -15,7 +15,7 @@ function getWorkflowRuns(workflowID: string, apiClient: ApiClient): Promise<Work
 
 export function useWorkflowRunDescribe(runID: string, client: ApiClient | undefined) {
   const shouldFetch = client != undefined && runID != ""
-  const { data, error } = useSWR(shouldFetch ? ["workflow-run-describe", runID] : null, (k: string) => describeWorkflowRun(runID, client!))
+  const { data, error } = useSWR(shouldFetch ? ["workflow-run-describe", runID] : null, (_: string) => describeWorkflowRun(runID, client!))
   return swrResp(data, error)
 }
 

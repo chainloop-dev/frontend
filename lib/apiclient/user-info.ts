@@ -4,7 +4,7 @@ import useSWR from 'swr'
 
 export function useCurrentUser(client: ApiClient | undefined) {
   const shouldFetch = client != undefined
-  const { data, error } = useSWR(shouldFetch ? "current-context" : null, (k: string) => currentUser(client!))
+  const { data, error } = useSWR(shouldFetch ? "current-context" : null, (_: string) => currentUser(client!))
   return swrResp(data, error)
 }
 

@@ -1,4 +1,7 @@
-import { AttestationItem } from "@pb/controlplane/v1/response_messages";
+import {
+  AttestationItem,
+  WorkflowContractVersionItem,
+} from "@pb/controlplane/v1/response_messages";
 import {
   Box,
   Tabs,
@@ -16,13 +19,17 @@ import {
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useState } from "react";
+import { CraftingSchema } from "@pb/workflowcontract/v1/crafting_schema";
 
 export const AttestationInfo = ({
   attestation,
+  contract,
 }: {
   attestation: AttestationItem;
+  contract: WorkflowContractVersionItem;
 }) => {
   const [selectedTab, selectTab] = useState(0);
+  const schema = CraftingSchema.toJSON(contract.v1!);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     selectTab(newValue);
@@ -41,6 +48,7 @@ export const AttestationInfo = ({
         }}
       >
         <Tab label="Summary" />
+        <Tab label="Contract" />
         <Tab label="Statement" />
         <Tab label="Envelope" />
       </Tabs>
@@ -48,9 +56,12 @@ export const AttestationInfo = ({
         <AttestationSummary att={attestation} />
       </TabPanel>
       <TabPanel index={1} value={selectedTab}>
-        <Codehighlighter data={statement(attestation)} />
+        <Codehighlighter data={schema} />
       </TabPanel>
       <TabPanel index={2} value={selectedTab}>
+        <Codehighlighter data={statement(attestation)} />
+      </TabPanel>
+      <TabPanel index={3} value={selectedTab}>
         <Codehighlighter data={envelope(attestation)} />
       </TabPanel>
     </Box>

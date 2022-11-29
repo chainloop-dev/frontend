@@ -12,11 +12,14 @@ export const RunDetail = ({ runID }: { runID: string }) => {
 
   const run = data?.result?.workflowRun;
   const attestation = data?.result?.attestation;
+  const contract = run?.contractVersion;
 
   return (
     <WithLoader loading={isLoading}>
       {run && <WorkflowRunSummary run={run} />}
-      {attestation && <AttestationInfo attestation={attestation} />}
+      {attestation && contract && (
+        <AttestationInfo contract={contract} attestation={attestation} />
+      )}
       {!attestation && (
         <Typography variant="h5" align="center" m={4}>
           The attestation crafting is in progress. Not been received yet.

@@ -2,7 +2,7 @@ import { AttestationItem } from "@pb/controlplane/v1/response_messages";
 import { Box, Tabs, Tab, Divider } from "@mui/material";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 export const AttestationInfo = ({
   attestation,
@@ -27,13 +27,17 @@ export const AttestationInfo = ({
           borderColor: "divider",
         }}
       >
+        <Tab label="Summary" />
         <Tab label="Statement" />
         <Tab label="Envelope" />
       </Tabs>
       <TabPanel index={0} value={selectedTab}>
-        <Codehighlighter data={statement(attestation)} />
+        "TODO"
       </TabPanel>
       <TabPanel index={1} value={selectedTab}>
+        <Codehighlighter data={statement(attestation)} />
+      </TabPanel>
+      <TabPanel index={2} value={selectedTab}>
         <Codehighlighter data={envelope(attestation)} />
       </TabPanel>
     </Box>
@@ -41,9 +45,11 @@ export const AttestationInfo = ({
 };
 
 const Codehighlighter = ({ data }: { data: any }) => (
-  <SyntaxHighlighter language="json" style={theme}>
-    {JSON.stringify(data, null, 2)}
-  </SyntaxHighlighter>
+  <Box sx={{ fontSize: "12px" }}>
+    <SyntaxHighlighter language="json" style={theme}>
+      {JSON.stringify(data, null, 2)}
+    </SyntaxHighlighter>
+  </Box>
 );
 
 const envelope = (att: AttestationItem) => {
@@ -66,16 +72,10 @@ interface TabPanelProps {
 }
 
 const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
+  const { children, value, index } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index}>
       {value === index && children}
     </div>
   );

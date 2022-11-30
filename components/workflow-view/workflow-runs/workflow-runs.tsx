@@ -10,13 +10,17 @@ import { useState } from "react";
 import RunsListSidebar from "./list-sidebar";
 import RunDetail from "./detail";
 import { useAuth } from "@contexts/auth";
-import { useWorkflowRunsList } from "@lib/apiclient/workflowRuns";
+import {
+  IRunsListOpts,
+  useWorkflowRunsList,
+} from "@lib/apiclient/workflowRuns";
 import WithLoader from "../../with-loader";
 
 export const WorkflowRuns = ({ workflowID }: { workflowID: string }) => {
   const [currentRunID, setCurrentRunID] = useState("");
   const { apiClient } = useAuth();
-  const { isLoading, data } = useWorkflowRunsList(workflowID, apiClient);
+  const opts: IRunsListOpts = { workflowID: workflowID };
+  const { isLoading, data } = useWorkflowRunsList(opts, apiClient);
 
   return (
     <Card raised>

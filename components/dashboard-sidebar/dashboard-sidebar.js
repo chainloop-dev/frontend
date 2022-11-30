@@ -11,7 +11,8 @@ import {
   Link as MaterialLink,
 } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { Users as UsersIcon } from "../../icons/users";
+import DonutLargeIcon from "@mui/icons-material/DonutLarge";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import NavItem from "../nav-item";
 import { useEffect } from "react";
@@ -19,8 +20,13 @@ import { useEffect } from "react";
 const items = [
   {
     href: "/dashboard/workflows",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <ListAltIcon fontSize="small" />,
     title: "Workflows",
+  },
+  {
+    href: "/dashboard/workflow-runs",
+    icon: <DonutLargeIcon fontSize="small" />,
+    title: "Workflow Runs",
   },
 ];
 

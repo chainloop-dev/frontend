@@ -1,5 +1,4 @@
 import { Typography, Card, CardContent, Grid } from "@mui/material";
-import WorkflowRunStatus from "../workflow-runs/detail/run-status";
 import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
 
 export const WorkflowSummary = ({ wf }: { wf: WorkflowItem }) => {

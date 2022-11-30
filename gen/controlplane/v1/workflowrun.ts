@@ -2,6 +2,7 @@
 import { grpc } from "@improbable-eng/grpc-web";
 import { BrowserHeaders } from "browser-headers";
 import _m0 from "protobufjs/minimal";
+import { PaginationRequest, PaginationResponse } from "./pagination";
 import { AttestationItem, WorkflowContractVersionItem, WorkflowItem, WorkflowRunItem } from "./response_messages";
 
 export const protobufPackage = "controlplane.v1";
@@ -96,10 +97,12 @@ export interface AttestationServiceCancelResponse {
 export interface WorkflowRunServiceListRequest {
   /** Filter by workflow */
   workflowId: string;
+  pagination?: PaginationRequest;
 }
 
 export interface WorkflowRunServiceListResponse {
   result: WorkflowRunItem[];
+  pagination?: PaginationResponse;
 }
 
 export interface WorkflowRunServiceViewRequest {
@@ -670,13 +673,16 @@ export const AttestationServiceCancelResponse = {
 };
 
 function createBaseWorkflowRunServiceListRequest(): WorkflowRunServiceListRequest {
-  return { workflowId: "" };
+  return { workflowId: "", pagination: undefined };
 }
 
 export const WorkflowRunServiceListRequest = {
   encode(message: WorkflowRunServiceListRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.workflowId !== "") {
       writer.uint32(10).string(message.workflowId);
+    }
+    if (message.pagination !== undefined) {
+      PaginationRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -691,6 +697,9 @@ export const WorkflowRunServiceListRequest = {
         case 1:
           message.workflowId = reader.string();
           break;
+        case 2:
+          message.pagination = PaginationRequest.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -700,12 +709,17 @@ export const WorkflowRunServiceListRequest = {
   },
 
   fromJSON(object: any): WorkflowRunServiceListRequest {
-    return { workflowId: isSet(object.workflowId) ? String(object.workflowId) : "" };
+    return {
+      workflowId: isSet(object.workflowId) ? String(object.workflowId) : "",
+      pagination: isSet(object.pagination) ? PaginationRequest.fromJSON(object.pagination) : undefined,
+    };
   },
 
   toJSON(message: WorkflowRunServiceListRequest): unknown {
     const obj: any = {};
     message.workflowId !== undefined && (obj.workflowId = message.workflowId);
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination ? PaginationRequest.toJSON(message.pagination) : undefined);
     return obj;
   },
 
@@ -714,18 +728,24 @@ export const WorkflowRunServiceListRequest = {
   ): WorkflowRunServiceListRequest {
     const message = createBaseWorkflowRunServiceListRequest();
     message.workflowId = object.workflowId ?? "";
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PaginationRequest.fromPartial(object.pagination)
+      : undefined;
     return message;
   },
 };
 
 function createBaseWorkflowRunServiceListResponse(): WorkflowRunServiceListResponse {
-  return { result: [] };
+  return { result: [], pagination: undefined };
 }
 
 export const WorkflowRunServiceListResponse = {
   encode(message: WorkflowRunServiceListResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.result) {
       WorkflowRunItem.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PaginationResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -740,6 +760,9 @@ export const WorkflowRunServiceListResponse = {
         case 1:
           message.result.push(WorkflowRunItem.decode(reader, reader.uint32()));
           break;
+        case 2:
+          message.pagination = PaginationResponse.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -749,7 +772,10 @@ export const WorkflowRunServiceListResponse = {
   },
 
   fromJSON(object: any): WorkflowRunServiceListResponse {
-    return { result: Array.isArray(object?.result) ? object.result.map((e: any) => WorkflowRunItem.fromJSON(e)) : [] };
+    return {
+      result: Array.isArray(object?.result) ? object.result.map((e: any) => WorkflowRunItem.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PaginationResponse.fromJSON(object.pagination) : undefined,
+    };
   },
 
   toJSON(message: WorkflowRunServiceListResponse): unknown {
@@ -759,6 +785,8 @@ export const WorkflowRunServiceListResponse = {
     } else {
       obj.result = [];
     }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination ? PaginationResponse.toJSON(message.pagination) : undefined);
     return obj;
   },
 
@@ -767,6 +795,9 @@ export const WorkflowRunServiceListResponse = {
   ): WorkflowRunServiceListResponse {
     const message = createBaseWorkflowRunServiceListResponse();
     message.result = object.result?.map((e) => WorkflowRunItem.fromPartial(e)) || [];
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PaginationResponse.fromPartial(object.pagination)
+      : undefined;
     return message;
   },
 };

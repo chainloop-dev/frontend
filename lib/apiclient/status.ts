@@ -4,7 +4,7 @@ import useSWR from 'swr'
 
 export function useInfo(client: ApiClient | undefined) {
   const shouldFetch = client != undefined
-  const { data, error } = useSWR(shouldFetch ? "app-info" : null, (k: string) => getInfo(client!))
+  const { data, error } = useSWR(shouldFetch ? "app-info" : null, (_: string) => getInfo(client!))
   return swrResp(data, error)
 }
 

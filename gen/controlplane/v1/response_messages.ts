@@ -58,6 +58,7 @@ export interface WorkflowRunItem {
   workflow?: WorkflowItem;
   jobUrl: string;
   runnerType: string;
+  contractVersion?: WorkflowContractVersionItem;
 }
 
 export interface AttestationItem {
@@ -250,6 +251,7 @@ function createBaseWorkflowRunItem(): WorkflowRunItem {
     workflow: undefined,
     jobUrl: "",
     runnerType: "",
+    contractVersion: undefined,
   };
 }
 
@@ -278,6 +280,9 @@ export const WorkflowRunItem = {
     }
     if (message.runnerType !== "") {
       writer.uint32(66).string(message.runnerType);
+    }
+    if (message.contractVersion !== undefined) {
+      WorkflowContractVersionItem.encode(message.contractVersion, writer.uint32(74).fork()).ldelim();
     }
     return writer;
   },
@@ -313,6 +318,9 @@ export const WorkflowRunItem = {
         case 8:
           message.runnerType = reader.string();
           break;
+        case 9:
+          message.contractVersion = WorkflowContractVersionItem.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -331,6 +339,9 @@ export const WorkflowRunItem = {
       workflow: isSet(object.workflow) ? WorkflowItem.fromJSON(object.workflow) : undefined,
       jobUrl: isSet(object.jobUrl) ? String(object.jobUrl) : "",
       runnerType: isSet(object.runnerType) ? String(object.runnerType) : "",
+      contractVersion: isSet(object.contractVersion)
+        ? WorkflowContractVersionItem.fromJSON(object.contractVersion)
+        : undefined,
     };
   },
 
@@ -345,6 +356,9 @@ export const WorkflowRunItem = {
       (obj.workflow = message.workflow ? WorkflowItem.toJSON(message.workflow) : undefined);
     message.jobUrl !== undefined && (obj.jobUrl = message.jobUrl);
     message.runnerType !== undefined && (obj.runnerType = message.runnerType);
+    message.contractVersion !== undefined && (obj.contractVersion = message.contractVersion
+      ? WorkflowContractVersionItem.toJSON(message.contractVersion)
+      : undefined);
     return obj;
   },
 
@@ -360,6 +374,9 @@ export const WorkflowRunItem = {
       : undefined;
     message.jobUrl = object.jobUrl ?? "";
     message.runnerType = object.runnerType ?? "";
+    message.contractVersion = (object.contractVersion !== undefined && object.contractVersion !== null)
+      ? WorkflowContractVersionItem.fromPartial(object.contractVersion)
+      : undefined;
     return message;
   },
 };

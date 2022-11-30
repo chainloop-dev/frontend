@@ -4,7 +4,7 @@ import WithLoader from "../../../with-loader";
 import { useWorkflowRunDescribe } from "@lib/apiclient/workflowRuns";
 import WorkflowRunSummary from "./summary";
 import AttestationInfo from "./attestation-info";
-import { Typography, Box } from "@mui/material";
+import { Typography } from "@mui/material";
 
 export const RunDetail = ({ runID }: { runID: string }) => {
   const { apiClient } = useAuth();
@@ -12,11 +12,14 @@ export const RunDetail = ({ runID }: { runID: string }) => {
 
   const run = data?.result?.workflowRun;
   const attestation = data?.result?.attestation;
+  const contract = run?.contractVersion;
 
   return (
     <WithLoader loading={isLoading}>
       {run && <WorkflowRunSummary run={run} />}
-      {attestation && <AttestationInfo attestation={attestation} />}
+      {attestation && contract && (
+        <AttestationInfo contract={contract} attestation={attestation} />
+      )}
       {!attestation && (
         <Typography variant="h5" align="center" m={4}>
           The attestation crafting is in progress. Not been received yet.

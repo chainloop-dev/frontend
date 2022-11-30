@@ -4,7 +4,6 @@
 import "./globals.css";
 import { apiErrorMiddleware } from "@lib/apiclient/middleware";
 import { SWRConfig } from "swr";
-import { useRouter } from "next/navigation";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../theme";
 import { AuthProvider } from "@contexts/auth";
@@ -15,7 +14,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   return (
     <html lang="en">
       <head />

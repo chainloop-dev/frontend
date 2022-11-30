@@ -18,7 +18,7 @@ export const RunsListSidebar = ({
   onSelect,
 }: {
   runs: WorkflowRunItem[];
-  onSelect: (s: string) => void;
+  onSelect: (_: string) => void;
 }) => {
   const [currentRun, setCurrentRun] = useState("");
 

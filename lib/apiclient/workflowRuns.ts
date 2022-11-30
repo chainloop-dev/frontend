@@ -14,7 +14,8 @@ export function useWorkflowRunsList(opts: IRunsListOpts, client: ApiClient | und
   const shouldFetch = client != undefined
 
   // Arbitrary caching key
-  const fetchKey = ["workflow-runs", opts.workflowID, opts.limit, opts.nextCursor, opts.PrevCursor].join("-")
+  var fetchKey = ["workflow-runs", opts.workflowID, opts.limit, opts.nextCursor, opts.PrevCursor].join("-")
+  console.log(fetchKey)
 
   const { data, error } = useSWR(shouldFetch ? fetchKey : null, (_: string) => getWorkflowRuns(opts, client!))
   return swrResp(data, error)

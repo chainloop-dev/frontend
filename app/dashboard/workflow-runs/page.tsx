@@ -49,38 +49,39 @@ export default function WorkflowRunsList({}: {}) {
   }, [searchParams]);
 
   return (
-    <Box component="main" sx={{ flexGrow: 1 }}>
-      <Container maxWidth={false}>
-        <Typography sx={{ m: 1 }} variant="h4">
-          Workflow Runs
-        </Typography>
-        <Box sx={{ mt: 3 }}>
-          <WithLoader loading={loadingWorkflows}>
-            <Grid container justifyContent="right" pb="20px">
-              <Grid item xs={12} sm={6} lg={3} xl={2}>
-                <FormControl fullWidth>
-                  <InputLabel>Filter by Workflow</InputLabel>
-                  <Select
-                    value={workflowID}
-                    label="Workflow"
-                    onChange={handleWorkflowIDChange}
-                  >
-                    <MenuItem value="">Any</MenuItem>
-                    {workflows?.result.map((run) => (
-                      <MenuItem value={run.id} key={run.id}>
-                        {run.project}/{run.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+    <Container maxWidth={false}>
+      <Typography sx={{ m: 1 }} variant="h4">
+        Workflow Runs
+      </Typography>
+      <Box sx={{ mt: 3 }}>
+        <WithLoader loading={loadingWorkflows}>
+          <Grid container justifyContent="right" pb="20px">
+            <Grid item xs={12} sm={6} lg={3} xl={2}>
+              <FormControl fullWidth color="primary">
+                <InputLabel color="secondary">Filter by Workflow</InputLabel>
+                <Select
+                  value={workflowID}
+                  label="Workflow"
+                  variant="filled"
+                  color="secondary"
+                  sx={{ backgroundColor: "#FFF" }}
+                  onChange={handleWorkflowIDChange}
+                >
+                  <MenuItem value="">Any</MenuItem>
+                  {workflows?.result.map((run) => (
+                    <MenuItem value={run.id} key={run.id}>
+                      {run.project}/{run.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
-          </WithLoader>
-          <WorkflowRunsListResults
-            workflowID={workflowID}
-          ></WorkflowRunsListResults>
-        </Box>
-      </Container>
-    </Box>
+          </Grid>
+        </WithLoader>
+        <WorkflowRunsListResults
+          workflowID={workflowID}
+        ></WorkflowRunsListResults>
+      </Box>
+    </Container>
   );
 }

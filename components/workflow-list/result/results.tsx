@@ -27,7 +27,7 @@ export const WorkflowListResults = ({
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 1050 }}>
+      <Table sx={{ minWidth: 1050 }} className="Bordered">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>

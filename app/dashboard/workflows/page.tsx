@@ -2,8 +2,7 @@
 
 import { useWorkflows } from "@lib/apiclient/workflows";
 import { useAuth } from "@contexts/auth";
-import { Box, Container } from "@mui/material";
-import WorkflowListToolbar from "@components/workflow-list/toolbar";
+import { Box, Container, Typography } from "@mui/material";
 import WorkflowListResults from "@components/workflow-list/result";
 import WithLoader from "@components/with-loader";
 
@@ -13,19 +12,14 @@ export default function WorkflowsList() {
 
   return (
     <WithLoader loading={isLoading}>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-        }}
-      >
-        <Container maxWidth={false}>
-          <WorkflowListToolbar />
-          <Box sx={{ mt: 3 }}>
-            <WorkflowListResults workflows={data?.result} />
-          </Box>
-        </Container>
-      </Box>
+      <Container maxWidth={false}>
+        <Typography sx={{ m: 1 }} variant="h4">
+          Workflows
+        </Typography>
+        <Box sx={{ mt: 3 }}>
+          <WorkflowListResults workflows={data?.result} />
+        </Box>
+      </Container>
     </WithLoader>
   );
 }

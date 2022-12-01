@@ -84,7 +84,7 @@ export const WorkflowRunsListResults = ({
   return (
     <>
       <WithLoader loading={loadingRuns}>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} className="Bordered">
           <Table>
             <TableHead>
               <TableRow>

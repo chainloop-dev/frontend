@@ -1,7 +1,7 @@
 "use client";
 
 // These styles apply to every route in the application
-import "./globals.css";
+import "../styles/globals.css";
 import { apiErrorMiddleware } from "@lib/apiclient/middleware";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "@mui/material/styles";
@@ -17,17 +17,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <CssBaseline>
-        <body>
-          <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <body>
             <AuthProvider>
               <SWRConfig value={{ use: [apiErrorMiddleware] }}>
                 {children}
               </SWRConfig>
             </AuthProvider>
-          </ThemeProvider>
-        </body>
-      </CssBaseline>
+          </body>
+        </CssBaseline>
+      </ThemeProvider>
     </html>
   );
 }

@@ -110,6 +110,7 @@ export const DashboardSidebar = (props) => {
           endIcon={<OpenInNewIcon />}
           sx={{
             px: "3px",
+            color: "grey.300",
           }}
         >
           Documentation
@@ -126,8 +127,8 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: "neutral.900",
-            color: "#FFFFFF",
+            backgroundColor: "grey.900",
+            color: "grey.300",
             width: 280,
           },
         }}
@@ -146,8 +147,8 @@ export const DashboardSidebar = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "neutral.900",
-          color: "#FFFFFF",
+          backgroundColor: "grey.900",
+          color: "grey.300",
           width: 280,
         },
       }}

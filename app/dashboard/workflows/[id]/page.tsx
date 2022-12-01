@@ -6,7 +6,6 @@ import WithLoader from "@components/with-loader";
 import React, { useEffect, useState } from "react";
 import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
 import { Container } from "@mui/material";
-import WorkflowViewToolbar from "@components/workflow-view/toolbar";
 import WorkflowSummary from "@components/workflow-view/summary";
 import WorflowRuns from "@components/workflow-view/workflow-runs";
 import { Box } from "@mui/system";
@@ -30,7 +29,6 @@ export default function Page({ params }: { params: { id: string } }) {
   return (
     <WithLoader loading={isLoading || !workflow}>
       <Container maxWidth={false}>
-        <WorkflowViewToolbar></WorkflowViewToolbar>
         <Box mb="20px">
           <WorkflowSummary wf={workflow!}></WorkflowSummary>
         </Box>

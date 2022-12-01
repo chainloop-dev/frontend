@@ -17,6 +17,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export const WorkflowRunsListResults = ({
@@ -24,6 +25,7 @@ export const WorkflowRunsListResults = ({
 }: {
   workflowID: string;
 }) => {
+  const router = useRouter();
   const { apiClient } = useAuth();
   const mapPageToNextCursor = useRef<{ [page: number]: string }>({});
   const [limit, setLimit] = useState(25);
@@ -76,6 +78,9 @@ export const WorkflowRunsListResults = ({
     }
   }, [runs?.pagination?.nextCursor]);
 
+  const redirectToWorkflowRun = (runID: string) => () =>
+    router.push(`/dashboard/workflow-runs/${runID}`);
+
   return (
     <>
       <WithLoader loading={loadingRuns}>
@@ -92,7 +97,12 @@ export const WorkflowRunsListResults = ({
             </TableHead>
             <TableBody>
               {runs?.result.map((run) => (
-                <TableRow hover key={run.id} sx={{ cursor: "pointer" }}>
+                <TableRow
+                  hover
+                  key={run.id}
+                  onClick={redirectToWorkflowRun(run.id)}
+                  sx={{ cursor: "pointer" }}
+                >
                   <TableCell>{run.workflow!.name}</TableCell>
                   <TableCell>{run.workflow!.project}</TableCell>
                   <TableCell>{run.workflow!.team}</TableCell>

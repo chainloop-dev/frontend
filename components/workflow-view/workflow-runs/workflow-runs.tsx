@@ -19,7 +19,7 @@ import WithLoader from "../../with-loader";
 export const WorkflowRuns = ({ workflowID }: { workflowID: string }) => {
   const [currentRunID, setCurrentRunID] = useState("");
   const { apiClient } = useAuth();
-  const opts: IRunsListOpts = { workflowID: workflowID };
+  const opts: IRunsListOpts = { workflowID: workflowID, limit: 20 };
   const { isLoading, data } = useWorkflowRunsList(opts, apiClient);
 
   return (

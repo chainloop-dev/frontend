@@ -24,7 +24,6 @@ export const WorkflowRunSummary = ({ run }: { run: WorkflowRunItem }) => {
       justifyContent="space-between"
       alignItems="center"
       spacing={2}
-      sx={{ mt: "5px" }}
     >
       <Grid item md={6} xs={12}>
         <TableContainer>

@@ -12,6 +12,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { ReactNode, useEffect, useState } from "react";
 import { WorkflowRunItem } from "@pb/controlplane/v1/response_messages";
+import Link from "next/link";
 
 export const RunsListSidebar = ({
   runs,
@@ -67,14 +68,17 @@ export const RunsListSidebar = ({
             onClick={() => setCurrentRun(run.id)}
           >
             <Tooltip title={run.state}>
-              <ListItemIcon sx={{ label: "asd" }}>
-                {icon(run.state)}
-              </ListItemIcon>
+              <ListItemIcon>{icon(run.state)}</ListItemIcon>
             </Tooltip>
             <ListItemText>{format(run.createdAt!, "Pp")}</ListItemText>
           </ListItemButton>
         );
       })}
+      <ListItemButton
+        href={`/dashboard/workflow-runs?workflow=${runs[0].workflow!.id!}`}
+      >
+        <ListItemText>View more</ListItemText>
+      </ListItemButton>
     </List>
   );
 };

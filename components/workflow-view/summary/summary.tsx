@@ -1,9 +1,18 @@
-import { Typography, Card, CardContent, Grid } from "@mui/material";
+import {
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  CardHeader,
+  Divider,
+} from "@mui/material";
 import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
 
 export const WorkflowSummary = ({ wf }: { wf: WorkflowItem }) => {
   return (
     <Card raised>
+      <CardHeader title="Workflow Info" />
+      <Divider />
       <CardContent>
         <Grid container>
           <Grid item xs={3}>

@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import ApiClient, { swrResp } from "./client";
 import { WorkflowRunServiceClientImpl, WorkflowRunServiceListRequest, WorkflowRunServiceListResponse, WorkflowRunServiceViewResponse } from '@pb/controlplane/v1/workflowrun';
-import { PaginationRequest, PaginationRequest_Direction } from '@pb/controlplane/v1/pagination';
+import { PaginationRequest } from '@pb/controlplane/v1/pagination';
 
 export type IRunsListDirection = "next_page" | "prev_page"
 export interface IRunsListOpts {
@@ -31,7 +31,6 @@ function getWorkflowRuns(opts: IRunsListOpts, apiClient: ApiClient): Promise<Wor
 
   // pagination options
   const pageRequest: PaginationRequest = {
-    direction: PaginationRequest_Direction.DIRECTION_NEXT_PAGE,
     cursor: opts.cursor || "",
     limit: 0,
   }

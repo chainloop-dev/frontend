@@ -16,13 +16,13 @@ import { useAuth } from "@contexts/auth";
 import { useWorkflows } from "@lib/apiclient/workflows";
 import { useEffect, useState } from "react";
 import WithLoader from "@components/with-loader";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function WorkflowRunsList({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | undefined };
-}) {
+export default function WorkflowRunsList({}: {}) {
+  // TODO: useparams hook in theory should not be needed since params are injected as props
+  // but there is a bug that at the time of this writeup, a fix hasn't been
+  // released yet https://github.com/vercel/next.js/issues/42438
+  const searchParams = useSearchParams();
   const { apiClient } = useAuth();
   // Load workflows to enable filtering
   const { isLoading: loadingWorkflows, data: workflows } =
@@ -45,8 +45,7 @@ export default function WorkflowRunsList({
 
   // Load workflow from params
   useEffect(() => {
-    const workflowID = searchParams ? searchParams["workflow"] : "";
-    setWorkflowID(workflowID || "");
+    setWorkflowID(searchParams.get("workflow") || "");
   }, [searchParams]);
 
   return (

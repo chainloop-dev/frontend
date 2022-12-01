@@ -25,7 +25,7 @@ export const RunDetail = ({ runID }: { runID: string }) => {
       <Card raised>
         <CardHeader title="Workflow Run Info" />
         <Divider />
-        <CardContent>
+        <CardContent sx={{ paddingTop: "20px" }}>
           {run && <WorkflowRunSummary run={run} />}
           {attestation && contract && (
             <AttestationInfo contract={contract} attestation={attestation} />

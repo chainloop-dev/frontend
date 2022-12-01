@@ -6,7 +6,6 @@ import {
   IRunsListOpts,
   useWorkflowRunsList,
 } from "@lib/apiclient/workflowRuns";
-import { useWorkflows } from "@lib/apiclient/workflows";
 import {
   TableContainer,
   Paper,
@@ -16,23 +15,20 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Grid,
-  SelectChangeEvent,
 } from "@mui/material";
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 
-export const WorkflowRunsListResults = ({}: {}) => {
+export const WorkflowRunsListResults = ({
+  workflowID,
+}: {
+  workflowID: string;
+}) => {
   const { apiClient } = useAuth();
   const mapPageToNextCursor = useRef<{ [page: number]: string }>({});
   const [limit, setLimit] = useState(25);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [page, setCurrentPage] = useState(0);
-  const [workflowID, setWorkflowID] = useState("");
 
   // Load data
   const opts: IRunsListOpts = {
@@ -45,16 +41,11 @@ export const WorkflowRunsListResults = ({}: {}) => {
     apiClient
   );
 
-  // Load workflows to enable filtering
-  const { isLoading: loadingWorkflows, data: workflows } =
-    useWorkflows(apiClient);
-
   // Define handlers
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newLimit = parseInt(event.target.value, 10);
-    resetTable();
     setLimit(newLimit);
   };
 
@@ -63,10 +54,9 @@ export const WorkflowRunsListResults = ({}: {}) => {
     mapPageToNextCursor.current = {};
   };
 
-  const handleWorkflowIDChange = (event: SelectChangeEvent) => {
+  useEffect(() => {
     resetTable();
-    setWorkflowID(event.target.value as string);
-  };
+  }, [workflowID, limit]);
 
   const handlePageChange = (_e: any, newPage: number) => {
     // We have the cursor, we can allow the page transition.
@@ -88,26 +78,7 @@ export const WorkflowRunsListResults = ({}: {}) => {
 
   return (
     <>
-      <WithLoader loading={loadingRuns || loadingWorkflows}>
-        <Grid container justifyContent="right" pb="20px">
-          <Grid item xs={12} sm={6} lg={3} xl={2}>
-            <FormControl fullWidth>
-              <InputLabel>Filter by Workflow</InputLabel>
-              <Select
-                value={workflowID}
-                label="Workflow"
-                onChange={handleWorkflowIDChange}
-              >
-                <MenuItem value="">Any</MenuItem>
-                {workflows?.result.map((run) => (
-                  <MenuItem value={run.id} key={run.id}>
-                    {run.project}/{run.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+      <WithLoader loading={loadingRuns}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>

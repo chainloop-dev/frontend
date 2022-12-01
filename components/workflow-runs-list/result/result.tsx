@@ -17,15 +17,15 @@ export const WorkflowRunsListResults = ({
   runs,
   limit,
   setLimit,
+  handlePageChange,
+  page,
 }: {
   runs: WorkflowRunItem[];
   limit: number;
-  setLimit: (_: number) => void;
+  page: number;
+  setLimit: (_limit: number) => void;
+  handlePageChange: (_e: unknown, _page: number) => void;
 }) => {
-  const handleChangePage = (event: unknown, newPage: number) => {
-    console.log(newPage);
-  };
-
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -63,12 +63,12 @@ export const WorkflowRunsListResults = ({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[20, 50, 100]}
+        rowsPerPageOptions={[25, 50, 100]}
         rowsPerPage={limit}
         component="div"
         count={-1}
-        page={0}
-        onPageChange={handleChangePage}
+        page={page}
+        onPageChange={handlePageChange}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </>

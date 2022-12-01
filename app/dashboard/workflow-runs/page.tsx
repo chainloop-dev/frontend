@@ -36,16 +36,17 @@ export default function WorkflowRunsList({
     const workflowID = event.target.value as string;
     // TODO(miguel): find another way of doing this in the new router
     // The query object doesn't seem to be available?
-    router.push(`${currentPath}?workflow=${workflowID}`);
-    setWorkflowID(workflowID);
+    if (workflowID) {
+      router.push(`${currentPath}?workflow=${workflowID}`);
+    } else {
+      router.push(currentPath || "");
+    }
   };
 
   // Load workflow from params
   useEffect(() => {
-    const workflowID = searchParams && searchParams["workflow"];
-    if (!!workflowID) {
-      setWorkflowID(workflowID);
-    }
+    const workflowID = searchParams ? searchParams["workflow"] : "";
+    setWorkflowID(workflowID || "");
   }, [searchParams]);
 
   return (

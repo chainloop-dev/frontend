@@ -2,7 +2,6 @@ import useSWR from 'swr'
 import ApiClient, { swrResp } from "./client";
 import { WorkflowRunServiceClientImpl, WorkflowRunServiceListRequest, WorkflowRunServiceListResponse, WorkflowRunServiceViewResponse } from '@pb/controlplane/v1/workflowrun';
 import { PaginationRequest } from '@pb/controlplane/v1/pagination';
-import { Suspense } from 'react';
 
 export type IRunsListDirection = "next_page" | "prev_page"
 export interface IRunsListOpts {

@@ -8,7 +8,6 @@ import DashboardNavbar from "@components/dashboard-navbar";
 import DashboardSidebar from "@components/dashboard-sidebar";
 import { Box, Container, Grid, Skeleton } from "@mui/material";
 import ErrorBoundary from "@components/error-boundary";
-import { border } from "@mui/system";
 
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   display: "flex",

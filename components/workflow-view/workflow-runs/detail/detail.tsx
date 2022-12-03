@@ -1,6 +1,4 @@
 import { useAuth } from "@contexts/auth";
-import WithLoader from "../../../with-loader";
-
 import { useWorkflowRunDescribe } from "@lib/apiclient/workflowRuns";
 import WorkflowRunSummary from "./summary";
 import AttestationInfo from "./attestation-info";
@@ -14,29 +12,27 @@ import {
 
 export const RunDetail = ({ runID }: { runID: string }) => {
   const { apiClient } = useAuth();
-  const { isLoading, data } = useWorkflowRunDescribe(runID, apiClient);
+  const { data } = useWorkflowRunDescribe(runID, apiClient);
 
   const run = data?.result?.workflowRun;
   const attestation = data?.result?.attestation;
   const contract = run?.contractVersion;
 
   return (
-    <WithLoader loading={isLoading}>
-      <Card raised>
-        <CardHeader title="Workflow Run Info" />
-        <Divider />
-        <CardContent sx={{ paddingTop: "20px" }}>
-          {run && <WorkflowRunSummary run={run} />}
-          {attestation && contract && (
-            <AttestationInfo contract={contract} attestation={attestation} />
-          )}
-          {!attestation && (
-            <Typography variant="h5" align="center" m={4}>
-              The attestation crafting is in progress. Not been received yet.
-            </Typography>
-          )}
-        </CardContent>
-      </Card>
-    </WithLoader>
+    <Card raised>
+      <CardHeader title="Workflow Run Info" />
+      <Divider />
+      <CardContent sx={{ paddingTop: "20px" }}>
+        {run && <WorkflowRunSummary run={run} />}
+        {attestation && contract && (
+          <AttestationInfo contract={contract} attestation={attestation} />
+        )}
+        {!attestation && (
+          <Typography variant="h5" align="center" m={4}>
+            The attestation crafting is in progress. Not been received yet.
+          </Typography>
+        )}
+      </CardContent>
+    </Card>
   );
 };

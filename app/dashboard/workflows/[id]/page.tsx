@@ -2,7 +2,6 @@
 
 import { useWorkflows } from "@lib/apiclient/workflows";
 import { useAuth } from "@contexts/auth";
-import WithLoader from "@components/with-loader";
 import React, { useEffect, useState } from "react";
 import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
 import { Container } from "@mui/material";
@@ -13,7 +12,7 @@ import { Box } from "@mui/system";
 export default function Page({ params }: { params: { id: string } }) {
   const [workflow, setWorkflow] = useState<WorkflowItem>();
   const { apiClient } = useAuth();
-  const { isLoading, data } = useWorkflows(apiClient);
+  const { data } = useWorkflows(apiClient);
 
   useEffect(() => {
     if (data == null) return;
@@ -27,13 +26,11 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [data]);
 
   return (
-    <WithLoader loading={isLoading || !workflow}>
-      <Container maxWidth={false}>
-        <Box mb="20px">
-          <WorkflowSummary wf={workflow!}></WorkflowSummary>
-        </Box>
-        {workflow && <WorflowRuns workflowID={workflow?.id} />}
-      </Container>
-    </WithLoader>
+    <Container>
+      <Box mb="20px">
+        {workflow && <WorkflowSummary wf={workflow!}></WorkflowSummary>}
+      </Box>
+      {workflow && <WorflowRuns workflowID={workflow?.id} />}
+    </Container>
   );
 }

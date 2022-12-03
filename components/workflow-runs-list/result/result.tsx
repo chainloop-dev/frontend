@@ -1,4 +1,3 @@
-import WithLoader from "@components/with-loader";
 import WorkflowRunStatus from "@components/workflow-view/workflow-runs/detail/run-status";
 import { IStatus } from "@components/workflow-view/workflow-runs/detail/run-status/run-status";
 import { useAuth } from "@contexts/auth";
@@ -38,10 +37,7 @@ export const WorkflowRunsListResults = ({
     workflowID: workflowID,
     cursor: mapPageToNextCursor.current[page - 1],
   };
-  const { isLoading: loadingRuns, data: runs } = useWorkflowRunsList(
-    opts,
-    apiClient
-  );
+  const { data: runs } = useWorkflowRunsList(opts, apiClient);
 
   // Define handlers
   const handleChangeRowsPerPage = (
@@ -83,53 +79,51 @@ export const WorkflowRunsListResults = ({
 
   return (
     <>
-      <WithLoader loading={loadingRuns}>
-        <TableContainer component={Paper} className="Bordered">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Project</TableCell>
-                <TableCell>Team</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Started</TableCell>
+      <TableContainer component={Paper} className="Bordered">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Project</TableCell>
+              <TableCell>Team</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Started</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {runs?.result.map((run) => (
+              <TableRow
+                hover
+                key={run.id}
+                onClick={redirectToWorkflowRun(run.id)}
+                sx={{ cursor: "pointer" }}
+              >
+                <TableCell>{run.workflow!.name}</TableCell>
+                <TableCell>{run.workflow!.project}</TableCell>
+                <TableCell>{run.workflow!.team}</TableCell>
+                <TableCell>
+                  <WorkflowRunStatus
+                    status={run.state as IStatus}
+                  ></WorkflowRunStatus>
+                </TableCell>
+                <TableCell>{format(run?.createdAt!, "Pp")}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {runs?.result.map((run) => (
-                <TableRow
-                  hover
-                  key={run.id}
-                  onClick={redirectToWorkflowRun(run.id)}
-                  sx={{ cursor: "pointer" }}
-                >
-                  <TableCell>{run.workflow!.name}</TableCell>
-                  <TableCell>{run.workflow!.project}</TableCell>
-                  <TableCell>{run.workflow!.team}</TableCell>
-                  <TableCell>
-                    <WorkflowRunStatus
-                      status={run.state as IStatus}
-                    ></WorkflowRunStatus>
-                  </TableCell>
-                  <TableCell>{format(run?.createdAt!, "Pp")}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[25, 50, 100]}
-          rowsPerPage={limit}
-          component="div"
-          count={-1}
-          page={page}
-          nextIconButtonProps={{
-            disabled: !hasNextPage,
-          }}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </WithLoader>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[25, 50, 100]}
+        rowsPerPage={limit}
+        component="div"
+        count={-1}
+        page={page}
+        nextIconButtonProps={{
+          disabled: !hasNextPage,
+        }}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 };

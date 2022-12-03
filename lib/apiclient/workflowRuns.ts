@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import ApiClient, { swrResp } from "./client";
 import { WorkflowRunServiceClientImpl, WorkflowRunServiceListRequest, WorkflowRunServiceListResponse, WorkflowRunServiceViewResponse } from '@pb/controlplane/v1/workflowrun';
 import { PaginationRequest } from '@pb/controlplane/v1/pagination';
+import { Suspense } from 'react';
 
 export type IRunsListDirection = "next_page" | "prev_page"
 export interface IRunsListOpts {
@@ -16,7 +17,10 @@ export function useWorkflowRunsList(opts: IRunsListOpts, client: ApiClient | und
   // Arbitrary caching key
   var fetchKey = ["workflow-runs", opts.workflowID, opts.limit, opts.cursor].join("-")
 
-  const { data, error } = useSWR(shouldFetch ? fetchKey : null, (_: string) => getWorkflowRuns(opts, client!))
+  const { data, error } = useSWR(shouldFetch ? fetchKey : null,
+    (_: string) => getWorkflowRuns(opts, client!),
+    { suspense: true }
+  )
   return swrResp(data, error)
 }
 
@@ -46,7 +50,9 @@ function getWorkflowRuns(opts: IRunsListOpts, apiClient: ApiClient): Promise<Wor
 
 export function useWorkflowRunDescribe(runID: string, client: ApiClient | undefined) {
   const shouldFetch = client != undefined && runID != ""
-  const { data, error } = useSWR(shouldFetch ? ["workflow-run-describe", runID] : null, (_: string) => describeWorkflowRun(runID, client!))
+  const { data, error } = useSWR(shouldFetch ? ["workflow-run-describe", runID] : null,
+    (_: string) => describeWorkflowRun(runID, client!),
+    { suspense: true })
   return swrResp(data, error)
 }
 

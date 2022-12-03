@@ -11,17 +11,12 @@ interface CurrentUser {
   id: string;
 }
 
-interface CurrentOrg {
-  id: string;
-  name: string;
-}
-
 interface AuthInfo {
   isAuthenticated: boolean;
   apiClient?: ApiClient;
   currentUser?: CurrentUser;
   logout?: () => void;
-  login: (token: string) => void;
+  login: (_: string) => void;
 }
 
 const tokenStorageKey = "apiToken";
@@ -68,6 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [token]);
 
   const { data, isError, isLoading } = useCurrentUserAPI(apiClient);
+
   // Initialize the user currentUserData was fetched
   useEffect(() => {
     // This can not be caught by the middleware

@@ -4,7 +4,7 @@ import { WorkflowServiceListResponse, WorkflowServiceClientImpl } from "@pb/cont
 
 export function useWorkflows(client: ApiClient | undefined) {
   const shouldFetch = client != undefined
-  const { data, error } = useSWR(shouldFetch ? "workflows" : null, (_: string) => getWorkflows(client!))
+  const { data, error } = useSWR(shouldFetch ? "workflows" : null, (_: string) => getWorkflows(client!), { suspense: true })
   return swrResp(data, error)
 }
 

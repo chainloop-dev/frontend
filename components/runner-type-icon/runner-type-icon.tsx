@@ -1,8 +1,16 @@
 import { Icon, IconifyIcon } from "@iconify/react";
 import gitlabIcon from "@iconify/icons-mdi/gitlab";
 import githubIcon from "@iconify/icons-mdi/github";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
-export const RunnerTypeIcon = ({ runnerType }: { runnerType: string }) => {
+interface Props {
+  runnerType: string;
+  width?: string;
+  height?: string;
+}
+
+export const RunnerTypeIcon = (props: Props) => {
+  const { runnerType, ...other } = props;
   var icon: IconifyIcon | null = null;
   switch (runnerType) {
     case "GITHUB_ACTION":
@@ -14,8 +22,8 @@ export const RunnerTypeIcon = ({ runnerType }: { runnerType: string }) => {
   }
 
   if (!icon) {
-    return <></>;
+    return <AccountTreeIcon />;
   }
 
-  return <Icon icon={icon} />;
+  return <Icon icon={icon} {...other} />;
 };

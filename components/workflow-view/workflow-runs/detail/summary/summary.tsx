@@ -12,8 +12,8 @@ import {
 
 import { WorkflowRunItem } from "@pb/controlplane/v1/response_messages";
 import { format, formatDistance } from "date-fns";
-import WorkflowRunStatus from "../run-status";
-import { IStatus } from "../run-status/run-status";
+import WorkflowRunStatus from "../../../../run-status";
+import { IStatus } from "../../../../run-status/run-status";
 import RunnerTypeIcon from "../../../../runner-type-icon";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
@@ -91,7 +91,7 @@ export const WorkflowRunSummary = ({ run }: { run: WorkflowRunItem }) => {
   );
 };
 
-const humanizeRunnerType = (runnerType: string): string => {
+export const humanizeRunnerType = (runnerType: string): string => {
   switch (runnerType) {
     case "GITHUB_ACTION":
       return "Github Action";

@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { formatDistanceToNow } from "date-fns";
-import WorkflowRunStatus from "../../workflow-view/workflow-runs/detail/run-status";
-import { IStatus } from "../../workflow-view/workflow-runs/detail/run-status/run-status";
+import WorkflowRunStatus from "../../run-status";
+import { IStatus } from "../../run-status/run-status";
 import { useRouter } from "next/navigation";
 import { useWorkflows } from "@lib/apiclient/workflows";
 import { useAuth } from "@contexts/auth";

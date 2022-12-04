@@ -1,5 +1,4 @@
-import WorkflowRunStatus from "@components/workflow-view/workflow-runs/detail/run-status";
-import { IStatus } from "@components/workflow-view/workflow-runs/detail/run-status/run-status";
+import RunnerTypeIcon from "@components/runner-type-icon";
 import { useAuth } from "@contexts/auth";
 import {
   IRunsListOpts,
@@ -14,10 +13,18 @@ import {
   TableCell,
   TableBody,
   TablePagination,
+  Typography,
+  Box,
+  Tooltip,
+  Grid,
 } from "@mui/material";
-import { format } from "date-fns";
+import { formatDistance, formatDistanceToNow } from "date-fns";
+import EventIcon from "@mui/icons-material/Event";
+import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Theme } from "@mui/system";
+import { humanizeRunnerType } from "@components/workflow-view/workflow-runs/detail/summary/summary";
 
 export const WorkflowRunsListResults = ({
   workflowID,
@@ -77,17 +84,25 @@ export const WorkflowRunsListResults = ({
   const redirectToWorkflowRun = (runID: string) => () =>
     router.push(`/dashboard/workflow-runs/${runID}`);
 
+  if (runs?.result && runs.result.length == 0) {
+    return (
+      <Typography variant="h5" mt={4}>
+        There are not Workflow Runs
+      </Typography>
+    );
+  }
+
   return (
     <>
       <TableContainer component={Paper} className="Bordered">
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell></TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Project</TableCell>
               <TableCell>Team</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Started</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -98,15 +113,38 @@ export const WorkflowRunsListResults = ({
                 onClick={redirectToWorkflowRun(run.id)}
                 sx={{ cursor: "pointer" }}
               >
-                <TableCell>{run.workflow!.name}</TableCell>
+                <TableCell align="center" padding="none">
+                  <RunStatusIcon
+                    state={run.state}
+                    runnerType={run.runnerType}
+                  />
+                </TableCell>
+                <TableCell padding="none">{run.workflow!.name}</TableCell>
                 <TableCell>{run.workflow!.project}</TableCell>
                 <TableCell>{run.workflow!.team}</TableCell>
                 <TableCell>
-                  <WorkflowRunStatus
-                    status={run.state as IStatus}
-                  ></WorkflowRunStatus>
+                  <Grid item sx={{ alignItems: "center", display: "flex" }}>
+                    <EventIcon color="action" titleAccess="Run Started At" />
+                    <Typography display="inline" sx={{ pl: 1 }} variant="body2">
+                      {formatDistanceToNow(run.createdAt!)} ago
+                    </Typography>
+                  </Grid>
+                  {run.finishedAt && (
+                    <Grid item sx={{ alignItems: "center", display: "flex" }}>
+                      <TimelapseIcon
+                        color="action"
+                        titleAccess="Run duration"
+                      />
+                      <Typography
+                        display="inline"
+                        sx={{ pl: 1 }}
+                        variant="body2"
+                      >
+                        {formatDistance(run.finishedAt, run.createdAt!)}
+                      </Typography>
+                    </Grid>
+                  )}
                 </TableCell>
-                <TableCell>{format(run?.createdAt!, "Pp")}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -125,5 +163,41 @@ export const WorkflowRunsListResults = ({
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </>
+  );
+};
+
+const RunStatusIcon = ({
+  state,
+  runnerType,
+}: {
+  state: string;
+  runnerType: string;
+}) => {
+  var colorIcon: ((_: Theme) => string) | null = null;
+
+  switch (state) {
+    case "error":
+      colorIcon = (theme: Theme) => theme.palette.error.main;
+      break;
+    case "canceled":
+      colorIcon = (theme: Theme) => theme.palette.warning.main;
+      break;
+    case "success":
+      colorIcon = (theme: Theme) => theme.palette.success.main;
+      break;
+    default:
+      colorIcon = (theme: Theme) => theme.palette.warning.main;
+  }
+
+  if (colorIcon == null) return <></>;
+
+  return (
+    <Box sx={{ color: colorIcon }}>
+      <Tooltip title={`${humanizeRunnerType(runnerType)} - ${state}`}>
+        <Box>
+          <RunnerTypeIcon runnerType={runnerType} width="20px" />
+        </Box>
+      </Tooltip>
+    </Box>
   );
 };

@@ -2,11 +2,11 @@
 
 // These styles apply to every route in the application
 import { styled } from "@mui/material/styles";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import AuthGuard from "@components/auth-guard";
 import DashboardNavbar from "@components/dashboard-navbar";
 import DashboardSidebar from "@components/dashboard-sidebar";
-import { Box, Container, Grid, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import ErrorBoundary from "@components/error-boundary";
 
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
@@ -37,9 +37,7 @@ export default function RootLayout({
             width: "100%",
           }}
         >
-          <ErrorBoundary>
-            <Suspense fallback={<DashBoardSkeleton />}>{children}</Suspense>
-          </ErrorBoundary>
+          <ErrorBoundary>{children}</ErrorBoundary>
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />
@@ -50,21 +48,3 @@ export default function RootLayout({
     </AuthGuard>
   );
 }
-
-const DashBoardSkeleton = () => {
-  return (
-    <Container>
-      <Grid
-        sx={{ height: "100vh" }}
-        container
-        justifyContent="center"
-        alignItems="top"
-      >
-        <Grid item sx={{ width: "100%", height: "30%" }}>
-          <Skeleton variant="text" width="100%" sx={{ fontSize: "3rem" }} />
-          <Skeleton variant="rounded" width="100%" height="100%" />
-        </Grid>
-      </Grid>
-    </Container>
-  );
-};

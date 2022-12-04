@@ -1,7 +1,8 @@
 "use client";
 
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Skeleton, Typography } from "@mui/material";
 import WorkflowListResults from "@components/workflow-list/result";
+import { Suspense } from "react";
 
 export default function WorkflowsList() {
   return (
@@ -10,8 +11,19 @@ export default function WorkflowsList() {
         Workflows
       </Typography>
       <Box sx={{ mt: 3 }}>
-        <WorkflowListResults />
+        <Suspense fallback={<Sk />}>
+          <WorkflowListResults />
+        </Suspense>
       </Box>
     </Container>
   );
 }
+
+const Sk = () => {
+  return (
+    <>
+      <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
+      <Skeleton variant="rounded" height="300px" />
+    </>
+  );
+};

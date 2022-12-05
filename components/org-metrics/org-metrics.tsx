@@ -19,27 +19,27 @@ export const OrgMetrics = () => {
 
   const successfulRunsTotal = metrics.runsTotalByStatus["success"];
   const failedRunsTotal = metrics.runsTotalByStatus["error"];
+  const totalRuns = metrics.runsTotal;
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} lg={4}>
-            <TotalRuns
-              total={data?.result?.runsTotal || 0}
-              caption="Total Runs (7 days)"
-            />
+            <TotalRuns value={totalRuns || 0} caption="Total Runs (7 days)" />
           </Grid>
           <Grid item xs={12} sm={6} lg={4}>
             <TotalRuns
-              total={successfulRunsTotal || 0}
+              value={successfulRunsTotal || 0}
+              total={totalRuns}
               caption="Successful Runs (7 days)"
               color={statusColor(theme, "success")}
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={4}>
             <TotalRuns
-              total={failedRunsTotal || 0}
+              value={failedRunsTotal || 0}
+              total={totalRuns}
               caption="Failed Runs (7 days)"
               color={statusColor(theme, "error")}
             />

@@ -4,7 +4,7 @@ import { useAuth } from "@contexts/auth";
 import { Container } from "@mui/material";
 import WorkflowSummary from "@components/workflow-view/summary";
 import { Box } from "@mui/system";
-import { useWorkflowRunDescribe } from "@lib/apiclient/workflowRuns";
+import { useWorkflowRunDescribe } from "@lib/apiclient/workflow-runs";
 import RunDetail from "@components/workflow-view/workflow-runs/detail";
 
 export default function Page({ params }: { params: { id: string } }) {

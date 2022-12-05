@@ -3,7 +3,7 @@ import { useAuth } from "@contexts/auth";
 import {
   IRunsListOpts,
   useWorkflowRunsList,
-} from "@lib/apiclient/workflowRuns";
+} from "@lib/apiclient/workflow-runs";
 import {
   TableContainer,
   Paper,
@@ -17,14 +17,15 @@ import {
   Box,
   Tooltip,
   Grid,
+  useTheme,
 } from "@mui/material";
 import { formatDistance, formatDistanceToNow } from "date-fns";
 import EventIcon from "@mui/icons-material/Event";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Theme } from "@mui/system";
-import { humanizeRunnerType } from "@components/workflow-view/workflow-runs/detail/summary/summary";
+import { humanizeRunnerType } from "@lib/workflow-run-utils";
+import { statusColor } from "@lib/workflow-run-utils";
 
 export const WorkflowRunsListResults = ({
   workflowID,
@@ -173,26 +174,11 @@ const RunStatusIcon = ({
   state: string;
   runnerType: string;
 }) => {
-  var colorIcon: ((_: Theme) => string) | null = null;
-
-  switch (state) {
-    case "error":
-      colorIcon = (theme: Theme) => theme.palette.error.main;
-      break;
-    case "canceled":
-      colorIcon = (theme: Theme) => theme.palette.warning.main;
-      break;
-    case "success":
-      colorIcon = (theme: Theme) => theme.palette.success.main;
-      break;
-    default:
-      colorIcon = (theme: Theme) => theme.palette.warning.main;
-  }
-
-  if (colorIcon == null) return <></>;
+  const theme = useTheme();
+  const c = statusColor(theme, state);
 
   return (
-    <Box sx={{ color: colorIcon }}>
+    <Box sx={{ color: c }}>
       <Tooltip title={`${humanizeRunnerType(runnerType)} - ${state}`}>
         <Box>
           <RunnerTypeIcon runnerType={runnerType} width="20px" />

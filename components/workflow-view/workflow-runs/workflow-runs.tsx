@@ -13,7 +13,7 @@ import { useAuth } from "@contexts/auth";
 import {
   IRunsListOpts,
   useWorkflowRunsList,
-} from "@lib/apiclient/workflowRuns";
+} from "@lib/apiclient/workflow-runs";
 
 export const WorkflowRuns = ({ workflowID }: { workflowID: string }) => {
   const [currentRunID, setCurrentRunID] = useState("");

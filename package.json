@@ -30,6 +30,7 @@
     "react-dom": "18.2.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-syntax-highlighter": "^15.5.0",
+    "recharts": "^2.1.16",
     "swr": "^1.3.0",
     "typescript": "^4.4.4"
   },

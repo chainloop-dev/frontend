@@ -16,6 +16,7 @@ import WorkflowRunStatus from "../../../../run-status";
 import { IStatus } from "../../../../run-status/run-status";
 import RunnerTypeIcon from "../../../../runner-type-icon";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { humanizeRunnerType } from "@lib/workflow-run-utils";
 
 export const WorkflowRunSummary = ({ run }: { run: WorkflowRunItem }) => {
   return (
@@ -89,15 +90,4 @@ export const WorkflowRunSummary = ({ run }: { run: WorkflowRunItem }) => {
       </Grid>
     </Grid>
   );
-};
-
-export const humanizeRunnerType = (runnerType: string): string => {
-  switch (runnerType) {
-    case "GITHUB_ACTION":
-      return "Github Action";
-    case "GITLAB_PIPELINE":
-      return "Gitlab";
-    default:
-      return "not specified";
-  }
 };

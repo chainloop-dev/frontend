@@ -1,5 +1,5 @@
 import { useAuth } from "@contexts/auth";
-import { useWorkflowRunDescribe } from "@lib/apiclient/workflowRuns";
+import { useWorkflowRunDescribe } from "@lib/apiclient/workflow-runs";
 import WorkflowRunSummary from "./summary";
 import AttestationInfo from "./attestation-info";
 import {

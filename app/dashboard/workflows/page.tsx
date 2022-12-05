@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Skeleton, Typography } from "@mui/material";
+import { Box, Container, Skeleton } from "@mui/material";
 import WorkflowListResults from "@components/workflow-list/result";
 import { Suspense } from "react";
 import OrgMetrics from "@components/org-metrics";

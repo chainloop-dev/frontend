@@ -8,9 +8,6 @@ import OrgMetrics from "@components/org-metrics";
 export default function WorkflowsList() {
   return (
     <Container maxWidth={false}>
-      <Typography sx={{ m: 1 }} variant="h4">
-        Workflows
-      </Typography>
       <Box sx={{ mt: 3 }}>
         <OrgMetrics />
       </Box>

@@ -5,8 +5,6 @@ import TotalRuns from "./total-runs";
 import TotalRunsByRunnerType from "./total-runs-by-runner-type";
 import TotalRunsByStatus from "./total-runs-by-status";
 import { statusColor } from "@lib/workflow-run-utils";
-import DoneOutlineOutlinedIcon from "@mui/icons-material/DoneOutlineOutlined";
-import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 
 export const OrgMetrics = () => {
   const { apiClient } = useAuth();
@@ -47,10 +45,14 @@ export const OrgMetrics = () => {
         </Grid>
       </Grid>
       <Grid item sm={6} xl={4}>
-        <TotalRunsByStatus total={data?.result?.runsTotalByStatus!} />
+        {totalRuns > 0 && (
+          <TotalRunsByStatus total={data?.result?.runsTotalByStatus!} />
+        )}
       </Grid>
       <Grid item sm={6} xl={4}>
-        <TotalRunsByRunnerType total={data?.result?.runsTotalByRunnerType!} />
+        {totalRuns > 0 && (
+          <TotalRunsByRunnerType total={data?.result?.runsTotalByRunnerType!} />
+        )}
       </Grid>
     </Grid>
   );

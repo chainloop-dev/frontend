@@ -9,7 +9,9 @@ export default function WorkflowsList() {
   return (
     <Container maxWidth={false}>
       <Box sx={{ mt: 3 }}>
-        <OrgMetrics />
+        <Suspense fallback={<Sk />}>
+          <OrgMetrics />
+        </Suspense>
       </Box>
       <Box sx={{ mt: 3 }}>
         <Suspense fallback={<Sk />}>

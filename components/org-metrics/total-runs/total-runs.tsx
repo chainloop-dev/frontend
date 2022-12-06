@@ -43,7 +43,7 @@ export const TotalRuns = (props: Props) => {
             </Typography>
           </Grid>
           <Grid item>
-            {props.total && (
+            {!!props.total && (
               <PercentChart
                 color={props.color}
                 value={props.value}

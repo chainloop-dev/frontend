@@ -1,6 +1,5 @@
-import { Card, CardContent, Grid, Typography } from "@mui/material";
-import { CSSProperties } from "react";
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { Card, CardContent, Grid, styled, Typography } from "@mui/material";
+import { RadialBar, PolarAngleAxis, RadialBarChart } from "recharts";
 
 interface Props {
   value: number;
@@ -11,24 +10,39 @@ interface Props {
 }
 
 export const TotalRuns = (props: Props) => {
+  const TotalMetricsCard = styled(CardContent)(`
+  padding: 15px;
+  &:last-child {
+    padding-bottom: 0;
+  };
+  height: 170px;
+`);
+
   return (
     <Card>
-      <CardContent>
-        <Typography color="textSecondary" gutterBottom variant="overline">
+      <TotalMetricsCard>
+        <Typography color="textSecondary" variant="overline">
           {props.caption}
         </Typography>
-        <Grid container alignItems="center">
-          <Grid item xs={4}>
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          height="70%"
+        >
+          <Grid item>
             <Typography
               color="textPrimary"
-              variant="h2"
-              textAlign="center"
-              sx={{ color: props.color, paddingTop: "10px" }}
+              variant="h1"
+              textAlign="right"
+              sx={{
+                color: props.color,
+              }}
             >
               {props.value}
             </Typography>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item>
             {props.total && (
               <PercentChart
                 color={props.color}
@@ -38,7 +52,7 @@ export const TotalRuns = (props: Props) => {
             )}
           </Grid>
         </Grid>
-      </CardContent>
+      </TotalMetricsCard>
     </Card>
   );
 };
@@ -57,55 +71,51 @@ const PercentChart = ({
   value: number;
   total: number;
 }) => {
+  const percentRate = getPercent(value, total);
   const data: Array<DataItemI> = [
     {
       name: "val",
-      value: getPercent(value, total),
-    },
-    {
-      name: "remainder",
-      value: getPercent(total - value, total),
+      value: percentRate,
     },
   ];
 
+  const circleSize = 110;
   return (
-    <ResponsiveContainer height={100}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          innerRadius={20}
-          isAnimationActive={false}
-        >
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fillOpacity={entry.name == "remainder" ? "10%" : 100}
-              fill={color}
-            />
-          ))}
-        </Pie>
-        <Tooltip content={<CustomTooltip />} />
-      </PieChart>
-    </ResponsiveContainer>
+    <RadialBarChart
+      width={circleSize}
+      height={circleSize}
+      barSize={8}
+      data={data}
+      innerRadius={30}
+      startAngle={90}
+      endAngle={-270}
+    >
+      <PolarAngleAxis
+        type="number"
+        domain={[0, 1]}
+        angleAxisId={0}
+        tick={false}
+      />
+      <RadialBar
+        background
+        dataKey="value"
+        cornerRadius={circleSize / 2}
+        fill={color}
+        isAnimationActive={false}
+      />
+      <text
+        x={circleSize / 2}
+        y={circleSize / 2}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        className="progress-label"
+      >
+        {toPercent(percentRate)}
+      </text>
+    </RadialBarChart>
   );
 };
 
-const CustomTooltip = ({ active, payload }: any) => {
-  const finalStyle: CSSProperties = {
-    margin: 0,
-    padding: 10,
-    backgroundColor: "#fff",
-    border: "1px solid #ccc",
-    whiteSpace: "nowrap",
-  };
-
-  if (active && payload) {
-    return <div style={finalStyle}>{toPercent(payload[0].value)}</div>;
-  }
-
-  return null;
-};
 const getPercent = (value: number, total: number) => {
   return total > 0 ? value / total : 0;
 };

@@ -1,13 +1,12 @@
-import WorkflowRunStatus from "@components/run-status";
-import { IStatus } from "@components/run-status/run-status";
 import { useAuth } from "@contexts/auth";
-import { useOrgTopWorkflowsByRunCountMetrics } from "@lib/apiclient/metrics";
+import {
+  TimeWindow,
+  useOrgTopWorkflowsByRunCountMetrics,
+} from "@lib/apiclient/metrics";
 import { namespacedName, statusColor } from "@lib/workflow-run-utils";
 import {
-  Box,
   Card,
   CardContent,
-  CardHeader,
   Grid,
   Table,
   TableBody,
@@ -20,8 +19,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { TopWorkflowsByRunsCountResponse_TotalByStatus } from "@pb/controlplane/v1/orgmetrics";
-import { formatDistanceToNow } from "date-fns";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   Bar,
   BarChart,
@@ -33,15 +32,21 @@ import {
 
 interface DataItemI {
   name: string;
+  workflowID: string;
   value: { [key: string]: number };
 }
 
-export const TopWorkflowsByRunsCount = () => {
+export const TopWorkflowsByRunsCount = ({
+  timeWindow,
+}: {
+  timeWindow: TimeWindow;
+}) => {
   const { apiClient } = useAuth();
   // Load workflows to enable filtering
-  const { data } = useOrgTopWorkflowsByRunCountMetrics(apiClient);
+  const { data } = useOrgTopWorkflowsByRunCountMetrics(apiClient, timeWindow);
   const theme = useTheme();
   const router = useRouter();
+  const [selectedWorkflowID, setSelectedWorkflowID] = useState("");
 
   var chartData: [DataItemI?] = [];
 
@@ -49,6 +54,7 @@ export const TopWorkflowsByRunsCount = () => {
     chartData.push({
       name: namespacedName(m.workflow!),
       value: m.runsTotalByStatus,
+      workflowID: m.workflow!.id,
     });
   });
 
@@ -63,14 +69,15 @@ export const TopWorkflowsByRunsCount = () => {
     <Card raised>
       <CardContent sx={{ width: "100%" }}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography color="textSecondary" variant="overline">
-              Top Workflows (7 days)
+              {`Top Workflows (${timeWindow})`}
             </Typography>
-            {renderChart(chartData, theme)}
+            {renderChart(chartData, theme, setSelectedWorkflowID)}
           </Grid>
-          <Grid item xs={6}>
-            {data?.result && renderTable(data.result, redirectToWorkflow)}
+          <Grid item xs={12} md={6}>
+            {data?.result &&
+              renderTable(data.result, redirectToWorkflow, selectedWorkflowID)}
           </Grid>
         </Grid>
       </CardContent>
@@ -80,7 +87,8 @@ export const TopWorkflowsByRunsCount = () => {
 
 const renderTable = (
   data: TopWorkflowsByRunsCountResponse_TotalByStatus[],
-  clickFunc: any
+  clickFunc: any,
+  selectedWorkflowID: string
 ) => {
   return (
     <TableContainer>
@@ -98,6 +106,7 @@ const renderTable = (
             return (
               <TableRow
                 hover
+                selected={selectedWorkflowID == workflow.id}
                 key={workflow.id}
                 onClick={clickFunc(workflow.id)}
                 sx={{ cursor: "pointer" }}
@@ -114,7 +123,11 @@ const renderTable = (
   );
 };
 
-const renderChart = (chartData: [DataItemI?], theme: Theme) => {
+const renderChart = (
+  chartData: [DataItemI?],
+  theme: Theme,
+  selectWorkflow: (_: string) => void
+) => {
   return (
     <ResponsiveContainer height={350}>
       <BarChart
@@ -131,17 +144,37 @@ const renderChart = (chartData: [DataItemI?], theme: Theme) => {
         <XAxis dataKey="name" hide />
         <YAxis />
         <Tooltip />
-        {["success", "error"].map((status) => renderBar(status, theme))}
+        {["success", "error"].map((status) =>
+          renderBar(status, theme, selectWorkflow)
+        )}
       </BarChart>
     </ResponsiveContainer>
   );
 };
 
-const renderBar = (status: string, theme: Theme) => (
-  <Bar
-    dataKey={`value.${status}`}
-    stackId="a"
-    name={status}
-    fill={statusColor(theme, status)}
-  />
-);
+const renderBar = (
+  status: string,
+  theme: Theme,
+  selectWorkflow: (_: string) => void
+) => {
+  const handleMouseOver = ({ workflowID }: { workflowID: string }) => {
+    selectWorkflow(workflowID);
+  };
+
+  const handleMouseReset = () => {
+    selectWorkflow("");
+  };
+
+  return (
+    <Bar
+      label={"foo"}
+      dataKey={`value.${status}`}
+      key={status}
+      stackId="a"
+      name={status}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseReset}
+      fill={statusColor(theme, status)}
+    />
+  );
+};

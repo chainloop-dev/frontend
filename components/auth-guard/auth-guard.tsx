@@ -1,7 +1,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@contexts/auth";
-import { CircularProgress, Container, Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -10,18 +10,16 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
   if (!isAuthenticated && !loggingIn) {
     return (
-      <Container fixed>
-        <Grid
-          sx={{ height: "100vh" }}
-          container
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item>
-            <CircularProgress />
-          </Grid>
+      <Grid
+        sx={{ height: "100vh" }}
+        container
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item>
+          <CircularProgress />
         </Grid>
-      </Container>
+      </Grid>
     );
   }
 

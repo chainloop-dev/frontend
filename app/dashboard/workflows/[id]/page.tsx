@@ -4,7 +4,6 @@ import { useWorkflows } from "@lib/apiclient/workflows";
 import { useAuth } from "@contexts/auth";
 import React, { useEffect, useState } from "react";
 import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
-import { Container } from "@mui/material";
 import WorkflowSummary from "@components/workflow-view/summary";
 import WorflowRuns from "@components/workflow-view/workflow-runs";
 import { Box } from "@mui/system";
@@ -26,11 +25,11 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [data]);
 
   return (
-    <Container>
+    <>
       <Box mb="20px">
         {workflow && <WorkflowSummary wf={workflow!}></WorkflowSummary>}
       </Box>
       {workflow && <WorflowRuns workflowID={workflow?.id} />}
-    </Container>
+    </>
   );
 }

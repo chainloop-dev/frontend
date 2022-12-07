@@ -2,7 +2,6 @@
 
 import {
   Box,
-  Container,
   FormControl,
   Grid,
   InputLabel,
@@ -45,7 +44,7 @@ export default function WorkflowRunsList({}: {}) {
   }, [searchParams]);
 
   return (
-    <Container>
+    <>
       <Typography sx={{ m: 1 }} variant="h4">
         Workflow Runs
       </Typography>
@@ -60,7 +59,7 @@ export default function WorkflowRunsList({}: {}) {
           ></WorkflowRunsListResults>
         </Suspense>
       </Box>
-    </Container>
+    </>
   );
 }
 

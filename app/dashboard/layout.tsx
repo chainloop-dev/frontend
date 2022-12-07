@@ -6,7 +6,7 @@ import { useState } from "react";
 import AuthGuard from "@components/auth-guard";
 import DashboardNavbar from "@components/dashboard-navbar";
 import DashboardSidebar from "@components/dashboard-sidebar";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import ErrorBoundary from "@components/error-boundary";
 
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
@@ -37,7 +37,9 @@ export default function RootLayout({
             width: "100%",
           }}
         >
-          <ErrorBoundary>{children}</ErrorBoundary>
+          <ErrorBoundary>
+            <Container maxWidth={false}>{children}</Container>
+          </ErrorBoundary>
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />

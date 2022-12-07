@@ -13,11 +13,17 @@ import {
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import NavItem from "../nav-item";
 import { useEffect } from "react";
 
 const items = [
+  {
+    href: "/dashboard",
+    icon: <DashboardIcon fontSize="small" />,
+    title: "Dashboard",
+  },
   {
     href: "/dashboard/workflows",
     icon: <ListAltIcon fontSize="small" />,
@@ -61,7 +67,7 @@ export const DashboardSidebar = (props) => {
           <Grid container spacing={2} sx={{ p: 3 }} alignItems="center">
             <Grid item>
               <MaterialLink
-                href="/dashboard/workflows"
+                href="/dashboard"
                 component={Link}
                 underline="none"
                 color="inherit"
@@ -71,7 +77,7 @@ export const DashboardSidebar = (props) => {
             </Grid>
             <Grid item>
               <MaterialLink
-                href="/dashboard/workflows"
+                href="/dashboard"
                 component={Link}
                 underline="none"
                 color="inherit"

@@ -1,8 +1,9 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import OrgMetrics from "@components/org-metrics";
 
 export default function DashboardComponent() {
-  redirect("/dashboard/workflows")
-
-  // NOTE: if we don't add this return the compiler will fail
-  return "";
+  return (
+      <OrgMetrics />
+  );
 }

@@ -1,8 +1,10 @@
+import { TimeWindow } from "@lib/apiclient/metrics";
 import { Card, CardContent, Grid, styled, Typography } from "@mui/material";
 import { RadialBar, PolarAngleAxis, RadialBarChart } from "recharts";
 
 interface Props {
   value: number;
+  timeWindow: TimeWindow;
   // to calculate percentages
   total?: number;
   caption: string;
@@ -22,7 +24,7 @@ export const TotalRuns = (props: Props) => {
     <Card>
       <TotalMetricsCard>
         <Typography color="textSecondary" variant="overline">
-          {props.caption}
+          {`${props.caption} (${props.timeWindow})`}
         </Typography>
         <Grid
           container

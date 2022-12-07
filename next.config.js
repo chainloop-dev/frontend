@@ -6,11 +6,11 @@ const nextConfig = {
     appDir: true,
   },
   eslint: {
-    dirs: ['app', 'lib']
-  }
+    dirs: ["app", "lib", "components", "contexts"],
+  },
   // To deploy it via container image
   // Not supported yet
   // output: 'standalone',
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

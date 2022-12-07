@@ -9,9 +9,11 @@ import {
 } from "recharts";
 import { statusColor } from "@lib/workflow-run-utils";
 import { CSSProperties } from "react";
+import { TimeWindow } from "@lib/apiclient/metrics";
 
 interface Props {
   total: { [key: string]: number };
+  timeWindow: TimeWindow;
 }
 
 interface DataItemI {
@@ -39,7 +41,7 @@ export const TotalRunsByStatus = (props: Props) => {
     <Card>
       <CardContent sx={{ width: "100%" }}>
         <Typography color="textSecondary" gutterBottom variant="overline">
-          Run Status (7 days)
+          {`Run Status (${props.timeWindow})`}
         </Typography>
         <ResponsiveContainer height={150}>
           <PieChart>

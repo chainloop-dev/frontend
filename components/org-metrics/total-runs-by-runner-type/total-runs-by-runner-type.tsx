@@ -1,10 +1,12 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import { PieChart, Pie, ResponsiveContainer, Tooltip, Legend } from "recharts";
 import { humanizeRunnerType } from "@lib/workflow-run-utils";
+import { TimeWindow } from "@lib/apiclient/metrics";
 import { CSSProperties } from "react";
 
 interface Props {
   total: { [key: string]: number };
+  timeWindow: TimeWindow;
 }
 
 interface DataItemI {
@@ -34,7 +36,7 @@ export const TotalRunsByRunnerType = (props: Props) => {
     <Card>
       <CardContent sx={{ width: "100%" }}>
         <Typography color="textSecondary" gutterBottom variant="overline">
-          Runner Type (7 days)
+          {`Runner Type (${props.timeWindow})`}
         </Typography>
         <ResponsiveContainer height={150}>
           <PieChart>

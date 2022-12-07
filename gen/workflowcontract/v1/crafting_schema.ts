@@ -71,11 +71,10 @@ export enum CraftingSchema_Material_MaterialType {
   MATERIAL_TYPE_UNSPECIFIED = 0,
   STRING = 1,
   CONTAINER_IMAGE = 2,
-  /**
-   * ARTIFACT - SPDX_JSON = 4;
-   * SARIF = 5;
-   */
   ARTIFACT = 3,
+  SBOM_CYCLONEDX_JSON = 4,
+  /** SBOM_SPDX_JSON - SARIF = 5; */
+  SBOM_SPDX_JSON = 5,
   UNRECOGNIZED = -1,
 }
 
@@ -93,6 +92,12 @@ export function craftingSchema_Material_MaterialTypeFromJSON(object: any): Craft
     case 3:
     case "ARTIFACT":
       return CraftingSchema_Material_MaterialType.ARTIFACT;
+    case 4:
+    case "SBOM_CYCLONEDX_JSON":
+      return CraftingSchema_Material_MaterialType.SBOM_CYCLONEDX_JSON;
+    case 5:
+    case "SBOM_SPDX_JSON":
+      return CraftingSchema_Material_MaterialType.SBOM_SPDX_JSON;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -110,6 +115,10 @@ export function craftingSchema_Material_MaterialTypeToJSON(object: CraftingSchem
       return "CONTAINER_IMAGE";
     case CraftingSchema_Material_MaterialType.ARTIFACT:
       return "ARTIFACT";
+    case CraftingSchema_Material_MaterialType.SBOM_CYCLONEDX_JSON:
+      return "SBOM_CYCLONEDX_JSON";
+    case CraftingSchema_Material_MaterialType.SBOM_SPDX_JSON:
+      return "SBOM_SPDX_JSON";
     case CraftingSchema_Material_MaterialType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

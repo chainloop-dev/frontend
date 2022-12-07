@@ -3,6 +3,9 @@ import _m0 from "protobufjs/minimal";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import {
   CraftingSchema,
+  CraftingSchema_Material_MaterialType,
+  craftingSchema_Material_MaterialTypeFromJSON,
+  craftingSchema_Material_MaterialTypeToJSON,
   CraftingSchema_Runner_RunnerType,
   craftingSchema_Runner_RunnerTypeFromJSON,
   craftingSchema_Runner_RunnerTypeToJSON,
@@ -27,13 +30,14 @@ export interface Attestation_MaterialsEntry {
 }
 
 export interface Attestation_Material {
-  string?: Attestation_Material_String | undefined;
+  string?: Attestation_Material_KeyVal | undefined;
   containerImage?: Attestation_Material_ContainerImage | undefined;
   artifact?: Attestation_Material_Artifact | undefined;
   addedAt?: Date;
+  materialType: CraftingSchema_Material_MaterialType;
 }
 
-export interface Attestation_Material_String {
+export interface Attestation_Material_KeyVal {
   id: string;
   value: string;
 }
@@ -294,13 +298,13 @@ export const Attestation_MaterialsEntry = {
 };
 
 function createBaseAttestation_Material(): Attestation_Material {
-  return { string: undefined, containerImage: undefined, artifact: undefined, addedAt: undefined };
+  return { string: undefined, containerImage: undefined, artifact: undefined, addedAt: undefined, materialType: 0 };
 }
 
 export const Attestation_Material = {
   encode(message: Attestation_Material, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.string !== undefined) {
-      Attestation_Material_String.encode(message.string, writer.uint32(10).fork()).ldelim();
+      Attestation_Material_KeyVal.encode(message.string, writer.uint32(10).fork()).ldelim();
     }
     if (message.containerImage !== undefined) {
       Attestation_Material_ContainerImage.encode(message.containerImage, writer.uint32(18).fork()).ldelim();
@@ -309,7 +313,10 @@ export const Attestation_Material = {
       Attestation_Material_Artifact.encode(message.artifact, writer.uint32(26).fork()).ldelim();
     }
     if (message.addedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.addedAt), writer.uint32(34).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.addedAt), writer.uint32(42).fork()).ldelim();
+    }
+    if (message.materialType !== 0) {
+      writer.uint32(48).int32(message.materialType);
     }
     return writer;
   },
@@ -322,7 +329,7 @@ export const Attestation_Material = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.string = Attestation_Material_String.decode(reader, reader.uint32());
+          message.string = Attestation_Material_KeyVal.decode(reader, reader.uint32());
           break;
         case 2:
           message.containerImage = Attestation_Material_ContainerImage.decode(reader, reader.uint32());
@@ -330,8 +337,11 @@ export const Attestation_Material = {
         case 3:
           message.artifact = Attestation_Material_Artifact.decode(reader, reader.uint32());
           break;
-        case 4:
+        case 5:
           message.addedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          break;
+        case 6:
+          message.materialType = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -343,32 +353,35 @@ export const Attestation_Material = {
 
   fromJSON(object: any): Attestation_Material {
     return {
-      string: isSet(object.string) ? Attestation_Material_String.fromJSON(object.string) : undefined,
+      string: isSet(object.string) ? Attestation_Material_KeyVal.fromJSON(object.string) : undefined,
       containerImage: isSet(object.containerImage)
         ? Attestation_Material_ContainerImage.fromJSON(object.containerImage)
         : undefined,
       artifact: isSet(object.artifact) ? Attestation_Material_Artifact.fromJSON(object.artifact) : undefined,
       addedAt: isSet(object.addedAt) ? fromJsonTimestamp(object.addedAt) : undefined,
+      materialType: isSet(object.materialType) ? craftingSchema_Material_MaterialTypeFromJSON(object.materialType) : 0,
     };
   },
 
   toJSON(message: Attestation_Material): unknown {
     const obj: any = {};
     message.string !== undefined &&
-      (obj.string = message.string ? Attestation_Material_String.toJSON(message.string) : undefined);
+      (obj.string = message.string ? Attestation_Material_KeyVal.toJSON(message.string) : undefined);
     message.containerImage !== undefined && (obj.containerImage = message.containerImage
       ? Attestation_Material_ContainerImage.toJSON(message.containerImage)
       : undefined);
     message.artifact !== undefined &&
       (obj.artifact = message.artifact ? Attestation_Material_Artifact.toJSON(message.artifact) : undefined);
     message.addedAt !== undefined && (obj.addedAt = message.addedAt.toISOString());
+    message.materialType !== undefined &&
+      (obj.materialType = craftingSchema_Material_MaterialTypeToJSON(message.materialType));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<Attestation_Material>, I>>(object: I): Attestation_Material {
     const message = createBaseAttestation_Material();
     message.string = (object.string !== undefined && object.string !== null)
-      ? Attestation_Material_String.fromPartial(object.string)
+      ? Attestation_Material_KeyVal.fromPartial(object.string)
       : undefined;
     message.containerImage = (object.containerImage !== undefined && object.containerImage !== null)
       ? Attestation_Material_ContainerImage.fromPartial(object.containerImage)
@@ -377,16 +390,17 @@ export const Attestation_Material = {
       ? Attestation_Material_Artifact.fromPartial(object.artifact)
       : undefined;
     message.addedAt = object.addedAt ?? undefined;
+    message.materialType = object.materialType ?? 0;
     return message;
   },
 };
 
-function createBaseAttestation_Material_String(): Attestation_Material_String {
+function createBaseAttestation_Material_KeyVal(): Attestation_Material_KeyVal {
   return { id: "", value: "" };
 }
 
-export const Attestation_Material_String = {
-  encode(message: Attestation_Material_String, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const Attestation_Material_KeyVal = {
+  encode(message: Attestation_Material_KeyVal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -396,10 +410,10 @@ export const Attestation_Material_String = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): Attestation_Material_String {
+  decode(input: _m0.Reader | Uint8Array, length?: number): Attestation_Material_KeyVal {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAttestation_Material_String();
+    const message = createBaseAttestation_Material_KeyVal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -417,19 +431,19 @@ export const Attestation_Material_String = {
     return message;
   },
 
-  fromJSON(object: any): Attestation_Material_String {
+  fromJSON(object: any): Attestation_Material_KeyVal {
     return { id: isSet(object.id) ? String(object.id) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
-  toJSON(message: Attestation_Material_String): unknown {
+  toJSON(message: Attestation_Material_KeyVal): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Attestation_Material_String>, I>>(object: I): Attestation_Material_String {
-    const message = createBaseAttestation_Material_String();
+  fromPartial<I extends Exact<DeepPartial<Attestation_Material_KeyVal>, I>>(object: I): Attestation_Material_KeyVal {
+    const message = createBaseAttestation_Material_KeyVal();
     message.id = object.id ?? "";
     message.value = object.value ?? "";
     return message;

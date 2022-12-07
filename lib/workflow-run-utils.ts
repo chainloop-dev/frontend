@@ -1,4 +1,5 @@
 import { Theme } from "@mui/system";
+import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
 
 export const statusColor = (theme: Theme, state: string) => {
   var c: string;
@@ -29,3 +30,7 @@ export const humanizeRunnerType = (runnerType: string): string => {
       return "not specified";
   }
 };
+
+export const namespacedName = (run: WorkflowItem) => (
+  `${run.project}/${run.name}`
+)

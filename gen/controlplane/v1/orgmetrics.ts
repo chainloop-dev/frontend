@@ -2,6 +2,7 @@
 import { grpc } from "@improbable-eng/grpc-web";
 import { BrowserHeaders } from "browser-headers";
 import _m0 from "protobufjs/minimal";
+import { WorkflowItem } from "./response_messages";
 
 export const protobufPackage = "controlplane.v1";
 
@@ -52,6 +53,27 @@ export function metricsTimeWindowToJSON(object: MetricsTimeWindow): string {
 
 export interface OrgMetricsServiceTotalsRequest {
   timeWindow: MetricsTimeWindow;
+}
+
+export interface TopWorkflowsByRunsCountRequest {
+  /** top x number of runs to return */
+  numWorkflows: number;
+  timeWindow: MetricsTimeWindow;
+}
+
+export interface TopWorkflowsByRunsCountResponse {
+  result: TopWorkflowsByRunsCountResponse_TotalByStatus[];
+}
+
+export interface TopWorkflowsByRunsCountResponse_TotalByStatus {
+  workflow?: WorkflowItem;
+  /** Status -> [initialized, error, success] */
+  runsTotalByStatus: { [key: string]: number };
+}
+
+export interface TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry {
+  key: string;
+  value: number;
 }
 
 export interface OrgMetricsServiceTotalsResponse {
@@ -121,6 +143,276 @@ export const OrgMetricsServiceTotalsRequest = {
   ): OrgMetricsServiceTotalsRequest {
     const message = createBaseOrgMetricsServiceTotalsRequest();
     message.timeWindow = object.timeWindow ?? 0;
+    return message;
+  },
+};
+
+function createBaseTopWorkflowsByRunsCountRequest(): TopWorkflowsByRunsCountRequest {
+  return { numWorkflows: 0, timeWindow: 0 };
+}
+
+export const TopWorkflowsByRunsCountRequest = {
+  encode(message: TopWorkflowsByRunsCountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.numWorkflows !== 0) {
+      writer.uint32(8).int32(message.numWorkflows);
+    }
+    if (message.timeWindow !== 0) {
+      writer.uint32(16).int32(message.timeWindow);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TopWorkflowsByRunsCountRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTopWorkflowsByRunsCountRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.numWorkflows = reader.int32();
+          break;
+        case 2:
+          message.timeWindow = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TopWorkflowsByRunsCountRequest {
+    return {
+      numWorkflows: isSet(object.numWorkflows) ? Number(object.numWorkflows) : 0,
+      timeWindow: isSet(object.timeWindow) ? metricsTimeWindowFromJSON(object.timeWindow) : 0,
+    };
+  },
+
+  toJSON(message: TopWorkflowsByRunsCountRequest): unknown {
+    const obj: any = {};
+    message.numWorkflows !== undefined && (obj.numWorkflows = Math.round(message.numWorkflows));
+    message.timeWindow !== undefined && (obj.timeWindow = metricsTimeWindowToJSON(message.timeWindow));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TopWorkflowsByRunsCountRequest>, I>>(
+    object: I,
+  ): TopWorkflowsByRunsCountRequest {
+    const message = createBaseTopWorkflowsByRunsCountRequest();
+    message.numWorkflows = object.numWorkflows ?? 0;
+    message.timeWindow = object.timeWindow ?? 0;
+    return message;
+  },
+};
+
+function createBaseTopWorkflowsByRunsCountResponse(): TopWorkflowsByRunsCountResponse {
+  return { result: [] };
+}
+
+export const TopWorkflowsByRunsCountResponse = {
+  encode(message: TopWorkflowsByRunsCountResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.result) {
+      TopWorkflowsByRunsCountResponse_TotalByStatus.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TopWorkflowsByRunsCountResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTopWorkflowsByRunsCountResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.result.push(TopWorkflowsByRunsCountResponse_TotalByStatus.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TopWorkflowsByRunsCountResponse {
+    return {
+      result: Array.isArray(object?.result)
+        ? object.result.map((e: any) => TopWorkflowsByRunsCountResponse_TotalByStatus.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: TopWorkflowsByRunsCountResponse): unknown {
+    const obj: any = {};
+    if (message.result) {
+      obj.result = message.result.map((e) => e ? TopWorkflowsByRunsCountResponse_TotalByStatus.toJSON(e) : undefined);
+    } else {
+      obj.result = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TopWorkflowsByRunsCountResponse>, I>>(
+    object: I,
+  ): TopWorkflowsByRunsCountResponse {
+    const message = createBaseTopWorkflowsByRunsCountResponse();
+    message.result = object.result?.map((e) => TopWorkflowsByRunsCountResponse_TotalByStatus.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseTopWorkflowsByRunsCountResponse_TotalByStatus(): TopWorkflowsByRunsCountResponse_TotalByStatus {
+  return { workflow: undefined, runsTotalByStatus: {} };
+}
+
+export const TopWorkflowsByRunsCountResponse_TotalByStatus = {
+  encode(message: TopWorkflowsByRunsCountResponse_TotalByStatus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.workflow !== undefined) {
+      WorkflowItem.encode(message.workflow, writer.uint32(10).fork()).ldelim();
+    }
+    Object.entries(message.runsTotalByStatus).forEach(([key, value]) => {
+      TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry.encode(
+        { key: key as any, value },
+        writer.uint32(18).fork(),
+      ).ldelim();
+    });
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TopWorkflowsByRunsCountResponse_TotalByStatus {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTopWorkflowsByRunsCountResponse_TotalByStatus();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.workflow = WorkflowItem.decode(reader, reader.uint32());
+          break;
+        case 2:
+          const entry2 = TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry.decode(
+            reader,
+            reader.uint32(),
+          );
+          if (entry2.value !== undefined) {
+            message.runsTotalByStatus[entry2.key] = entry2.value;
+          }
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TopWorkflowsByRunsCountResponse_TotalByStatus {
+    return {
+      workflow: isSet(object.workflow) ? WorkflowItem.fromJSON(object.workflow) : undefined,
+      runsTotalByStatus: isObject(object.runsTotalByStatus)
+        ? Object.entries(object.runsTotalByStatus).reduce<{ [key: string]: number }>((acc, [key, value]) => {
+          acc[key] = Number(value);
+          return acc;
+        }, {})
+        : {},
+    };
+  },
+
+  toJSON(message: TopWorkflowsByRunsCountResponse_TotalByStatus): unknown {
+    const obj: any = {};
+    message.workflow !== undefined &&
+      (obj.workflow = message.workflow ? WorkflowItem.toJSON(message.workflow) : undefined);
+    obj.runsTotalByStatus = {};
+    if (message.runsTotalByStatus) {
+      Object.entries(message.runsTotalByStatus).forEach(([k, v]) => {
+        obj.runsTotalByStatus[k] = Math.round(v);
+      });
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TopWorkflowsByRunsCountResponse_TotalByStatus>, I>>(
+    object: I,
+  ): TopWorkflowsByRunsCountResponse_TotalByStatus {
+    const message = createBaseTopWorkflowsByRunsCountResponse_TotalByStatus();
+    message.workflow = (object.workflow !== undefined && object.workflow !== null)
+      ? WorkflowItem.fromPartial(object.workflow)
+      : undefined;
+    message.runsTotalByStatus = Object.entries(object.runsTotalByStatus ?? {}).reduce<{ [key: string]: number }>(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = Number(value);
+        }
+        return acc;
+      },
+      {},
+    );
+    return message;
+  },
+};
+
+function createBaseTopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry(): TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry {
+  return { key: "", value: 0 };
+}
+
+export const TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry = {
+  encode(
+    message: TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value !== 0) {
+      writer.uint32(16).int32(message.value);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number,
+  ): TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.string();
+          break;
+        case 2:
+          message.value = reader.int32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry {
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? Number(object.value) : 0 };
+  },
+
+  toJSON(message: TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = Math.round(message.value));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry>, I>>(
+    object: I,
+  ): TopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry {
+    const message = createBaseTopWorkflowsByRunsCountResponse_TotalByStatus_RunsTotalByStatusEntry();
+    message.key = object.key ?? "";
+    message.value = object.value ?? 0;
     return message;
   },
 };
@@ -429,6 +721,10 @@ export interface OrgMetricsService {
     request: DeepPartial<OrgMetricsServiceTotalsRequest>,
     metadata?: grpc.Metadata,
   ): Promise<OrgMetricsServiceTotalsResponse>;
+  TopWorkflowsByRunsCount(
+    request: DeepPartial<TopWorkflowsByRunsCountRequest>,
+    metadata?: grpc.Metadata,
+  ): Promise<TopWorkflowsByRunsCountResponse>;
 }
 
 export class OrgMetricsServiceClientImpl implements OrgMetricsService {
@@ -437,6 +733,7 @@ export class OrgMetricsServiceClientImpl implements OrgMetricsService {
   constructor(rpc: Rpc) {
     this.rpc = rpc;
     this.Totals = this.Totals.bind(this);
+    this.TopWorkflowsByRunsCount = this.TopWorkflowsByRunsCount.bind(this);
   }
 
   Totals(
@@ -444,6 +741,17 @@ export class OrgMetricsServiceClientImpl implements OrgMetricsService {
     metadata?: grpc.Metadata,
   ): Promise<OrgMetricsServiceTotalsResponse> {
     return this.rpc.unary(OrgMetricsServiceTotalsDesc, OrgMetricsServiceTotalsRequest.fromPartial(request), metadata);
+  }
+
+  TopWorkflowsByRunsCount(
+    request: DeepPartial<TopWorkflowsByRunsCountRequest>,
+    metadata?: grpc.Metadata,
+  ): Promise<TopWorkflowsByRunsCountResponse> {
+    return this.rpc.unary(
+      OrgMetricsServiceTopWorkflowsByRunsCountDesc,
+      TopWorkflowsByRunsCountRequest.fromPartial(request),
+      metadata,
+    );
   }
 }
 
@@ -463,6 +771,28 @@ export const OrgMetricsServiceTotalsDesc: UnaryMethodDefinitionish = {
     deserializeBinary(data: Uint8Array) {
       return {
         ...OrgMetricsServiceTotalsResponse.decode(data),
+        toObject() {
+          return this;
+        },
+      };
+    },
+  } as any,
+};
+
+export const OrgMetricsServiceTopWorkflowsByRunsCountDesc: UnaryMethodDefinitionish = {
+  methodName: "TopWorkflowsByRunsCount",
+  service: OrgMetricsServiceDesc,
+  requestStream: false,
+  responseStream: false,
+  requestType: {
+    serializeBinary() {
+      return TopWorkflowsByRunsCountRequest.encode(this).finish();
+    },
+  } as any,
+  responseType: {
+    deserializeBinary(data: Uint8Array) {
+      return {
+        ...TopWorkflowsByRunsCountResponse.decode(data),
         toObject() {
           return this;
         },

@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton, Typography } from "@mui/material";
-import WorkflowListResults from "src/components/workflow-list/result";
+import WorkflowListResults from "@components/workflow-list/result";
 import { Suspense } from "react";
 
 export default function WorkflowsList() {

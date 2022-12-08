@@ -6,7 +6,7 @@ const nextConfig = {
     appDir: true,
   },
   eslint: {
-    dirs: ["app", "lib", "components", "contexts"],
+    dirs: ["src"],
   },
   // To deploy it via container image
   // Not supported yet

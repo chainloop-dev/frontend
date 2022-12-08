@@ -1,7 +1,7 @@
 import {
   AttestationItem,
   WorkflowContractVersionItem,
-} from "src/gen/controlplane/v1/response_messages";
+} from "@pb/controlplane/v1/response_messages";
 import {
   Box,
   Tabs,
@@ -19,7 +19,7 @@ import {
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { agate as theme } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useState } from "react";
-import { CraftingSchema } from "src/pbgen/workflowcontract/v1/crafting_schema";
+import { CraftingSchema } from "@pb/workflowcontract/v1/crafting_schema";
 
 export const AttestationInfo = ({
   attestation,

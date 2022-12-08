@@ -6,7 +6,7 @@ import {
   CardHeader,
   Divider,
 } from "@mui/material";
-import { WorkflowItem } from "src/gen/controlplane/v1/response_messages";
+import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
 
 export const WorkflowSummary = ({ wf }: { wf: WorkflowItem }) => {
   return (

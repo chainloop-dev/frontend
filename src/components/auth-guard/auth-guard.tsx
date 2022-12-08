@@ -1,6 +1,6 @@
 import React from "react";
 import { usePathname } from "next/navigation";
-import { useAuth } from "src/contexts/auth";
+import { useAuth } from "@contexts/auth";
 import { CircularProgress, Grid } from "@mui/material";
 
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {

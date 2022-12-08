@@ -10,13 +10,13 @@ import {
   TableBody,
 } from "@mui/material";
 
-import { WorkflowRunItem } from "src/gen/controlplane/v1/response_messages";
+import { WorkflowRunItem } from "@pb/controlplane/v1/response_messages";
 import { format, formatDistance } from "date-fns";
 import WorkflowRunStatus from "../../../../run-status";
 import { IStatus } from "../../../../run-status/run-status";
 import RunnerTypeIcon from "../../../../runner-type-icon";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { humanizeRunnerType } from "src/lib/workflow-run-utils";
+import { humanizeRunnerType } from "@lib/workflow-run-utils";
 
 export const WorkflowRunSummary = ({ run }: { run: WorkflowRunItem }) => {
   return (

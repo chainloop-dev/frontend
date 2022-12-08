@@ -1,9 +1,9 @@
-import RunnerTypeIcon from "src/components/runner-type-icon";
-import { useAuth } from "src/contexts/auth";
+import RunnerTypeIcon from "@components/runner-type-icon";
+import { useAuth } from "@contexts/auth";
 import {
   IRunsListOpts,
   useWorkflowRunsList,
-} from "src/lib/apiclient/workflow-runs";
+} from "@lib/apiclient/workflow-runs";
 import {
   TableContainer,
   Paper,
@@ -24,8 +24,8 @@ import EventIcon from "@mui/icons-material/Event";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { humanizeRunnerType } from "src/lib/workflow-run-utils";
-import { statusColor } from "src/lib/workflow-run-utils";
+import { humanizeRunnerType } from "@lib/workflow-run-utils";
+import { statusColor } from "@lib/workflow-run-utils";
 
 export const WorkflowRunsListResults = ({
   workflowID,

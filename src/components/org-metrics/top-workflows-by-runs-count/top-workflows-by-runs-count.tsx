@@ -1,9 +1,9 @@
-import { useAuth } from "src/contexts/auth";
+import { useAuth } from "@contexts/auth";
 import {
   TimeWindow,
   useOrgTopWorkflowsByRunCountMetrics,
-} from "src/lib/apiclient/metrics";
-import { namespacedName, statusColor } from "src/lib/workflow-run-utils";
+} from "@lib/apiclient/metrics";
+import { namespacedName, statusColor } from "@lib/workflow-run-utils";
 import {
   Card,
   CardContent,
@@ -18,7 +18,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { TopWorkflowsByRunsCountResponse_TotalByStatus } from "src/pbgen/controlplane/v1/orgmetrics";
+import { TopWorkflowsByRunsCountResponse_TotalByStatus } from "@pb/controlplane/v1/orgmetrics";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {

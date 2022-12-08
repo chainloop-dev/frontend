@@ -1,11 +1,11 @@
 "use client";
 
-import { useWorkflows } from "src/lib/apiclient/workflows";
-import { useAuth } from "src/contexts/auth";
+import { useWorkflows } from "@lib/apiclient/workflows";
+import { useAuth } from "@contexts/auth";
 import React, { useEffect, useState } from "react";
-import { WorkflowItem } from "src/gen/controlplane/v1/response_messages";
-import WorkflowSummary from "src/components/workflow-view/summary";
-import WorflowRuns from "src/components/workflow-view/workflow-runs";
+import { WorkflowItem } from "@pb/controlplane/v1/response_messages";
+import WorkflowSummary from "@components/workflow-view/summary";
+import WorflowRuns from "@components/workflow-view/workflow-runs";
 import { Box } from "@mui/system";
 
 export default function Page({ params }: { params: { id: string } }) {

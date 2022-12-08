@@ -11,12 +11,12 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
-import { WorkflowRunsListResults } from "src/components/workflow-runs-list/result/result";
-import { useAuth } from "src/contexts/auth";
-import { useWorkflows } from "src/lib/apiclient/workflows";
+import { WorkflowRunsListResults } from "@components/workflow-runs-list/result/result";
+import { useAuth } from "@contexts/auth";
+import { useWorkflows } from "@lib/apiclient/workflows";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { namespacedName } from "src/lib/workflow-run-utils";
+import { namespacedName } from "@lib/workflow-run-utils";
 
 export default function WorkflowRunsList({}: {}) {
   const router = useRouter();

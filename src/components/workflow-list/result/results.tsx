@@ -13,8 +13,8 @@ import { formatDistanceToNow } from "date-fns";
 import WorkflowRunStatus from "../../run-status";
 import { IStatus } from "../../run-status/run-status";
 import { useRouter } from "next/navigation";
-import { useWorkflows } from "src/lib/apiclient/workflows";
-import { useAuth } from "src/contexts/auth";
+import { useWorkflows } from "@lib/apiclient/workflows";
+import { useAuth } from "@contexts/auth";
 
 export const WorkflowListResults = () => {
   const router = useRouter();

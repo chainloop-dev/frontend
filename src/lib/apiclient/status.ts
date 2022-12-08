@@ -1,5 +1,5 @@
 import ApiClient, { swrResp } from "./client";
-import { InfozResponse, StatusServiceClientImpl } from "src/pbgen/controlplane/v1/status";
+import { InfozResponse, StatusServiceClientImpl } from "@pb/controlplane/v1/status";
 import useSWR from 'swr'
 
 export function useInfo(client: ApiClient | undefined) {

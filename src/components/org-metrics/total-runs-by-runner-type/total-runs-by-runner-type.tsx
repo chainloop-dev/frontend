@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import { PieChart, Pie, ResponsiveContainer, Tooltip, Legend } from "recharts";
-import { humanizeRunnerType } from "src/lib/workflow-run-utils";
-import { TimeWindow } from "src/lib/apiclient/metrics";
+import { humanizeRunnerType } from "@lib/workflow-run-utils";
+import { TimeWindow } from "@lib/apiclient/metrics";
 import { CSSProperties } from "react";
 
 interface Props {

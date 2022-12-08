@@ -2,11 +2,11 @@
 
 // These styles apply to every route in the application
 import "../assets/styles/globals.css";
-import { apiErrorMiddleware } from "src/lib/apiclient/middleware";
+import { apiErrorMiddleware } from "@lib/apiclient/middleware";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@assets/styles/theme";
-import { AuthProvider } from "src/contexts/auth";
+import { AuthProvider } from "@contexts/auth";
 import CssBaseline from "@mui/material/CssBaseline";
 
 export default function RootLayout({

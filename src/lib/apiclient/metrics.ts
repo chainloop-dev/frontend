@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import ApiClient, { swrResp } from "./client";
-import { OrgMetricsServiceTotalsRequest, OrgMetricsServiceTotalsResponse, OrgMetricsServiceClientImpl, MetricsTimeWindow, TopWorkflowsByRunsCountRequest, TopWorkflowsByRunsCountResponse } from "src/pbgen/controlplane/v1/orgmetrics";
+import { OrgMetricsServiceTotalsRequest, OrgMetricsServiceTotalsResponse, OrgMetricsServiceClientImpl, MetricsTimeWindow, TopWorkflowsByRunsCountRequest, TopWorkflowsByRunsCountResponse } from "@pb/controlplane/v1/orgmetrics";
 
 export enum TimeWindow {
   Day = "24 Hours",

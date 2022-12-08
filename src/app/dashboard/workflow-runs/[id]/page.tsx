@@ -1,10 +1,10 @@
 "use client";
 
-import { useAuth } from "src/contexts/auth";
-import WorkflowSummary from "src/components/workflow-view/summary";
+import { useAuth } from "@contexts/auth";
+import WorkflowSummary from "@components/workflow-view/summary";
 import { Box } from "@mui/system";
-import { useWorkflowRunDescribe } from "src/lib/apiclient/workflow-runs";
-import RunDetail from "src/components/workflow-view/workflow-runs/detail";
+import { useWorkflowRunDescribe } from "@lib/apiclient/workflow-runs";
+import RunDetail from "@components/workflow-view/workflow-runs/detail";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { apiClient } = useAuth();

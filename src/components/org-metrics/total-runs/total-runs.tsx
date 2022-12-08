@@ -1,4 +1,4 @@
-import { TimeWindow } from "@lib/apiclient/metrics";
+import { TimeWindow } from "@hooks/metrics";
 import { Card, CardContent, Grid, styled, Typography } from "@mui/material";
 import { RadialBar, PolarAngleAxis, RadialBarChart } from "recharts";
 

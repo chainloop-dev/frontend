@@ -1,6 +1,6 @@
 "use client";
 
-import { useWorkflows } from "@lib/apiclient/workflows";
+import { useWorkflows } from "@hooks/workflows";
 import { useAuth } from "@contexts/auth";
 import React, { useEffect, useState } from "react";
 import { WorkflowItem } from "@pb/controlplane/v1/response_messages";

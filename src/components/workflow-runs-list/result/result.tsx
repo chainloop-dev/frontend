@@ -1,9 +1,6 @@
 import RunnerTypeIcon from "@components/runner-type-icon";
 import { useAuth } from "@contexts/auth";
-import {
-  IRunsListOpts,
-  useWorkflowRunsList,
-} from "@lib/apiclient/workflow-runs";
+import { IRunsListOpts, useWorkflowRunsList } from "@hooks/workflow-runs";
 import {
   TableContainer,
   Paper,
@@ -24,8 +21,7 @@ import EventIcon from "@mui/icons-material/Event";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { humanizeRunnerType } from "@lib/workflow-run-utils";
-import { statusColor } from "@lib/workflow-run-utils";
+import { statusColor, humanizedRunnerType } from "@utils/workflow-run";
 
 export const WorkflowRunsListResults = ({
   workflowID,
@@ -179,7 +175,7 @@ const RunStatusIcon = ({
 
   return (
     <Box sx={{ color: c }}>
-      <Tooltip title={`${humanizeRunnerType(runnerType)} - ${state}`}>
+      <Tooltip title={`${humanizedRunnerType(runnerType)} - ${state}`}>
         <Box>
           <RunnerTypeIcon runnerType={runnerType} width="20px" />
         </Box>

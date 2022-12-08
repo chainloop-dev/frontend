@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import ApiClient, { swrResp } from "./client";
+import ApiClient, { swrResp } from "@lib/apiclient/client";
 import { WorkflowServiceListResponse, WorkflowServiceClientImpl } from "@pb/controlplane/v1/workflow";
 
 export function useWorkflows(client: ApiClient | undefined) {

@@ -1,4 +1,4 @@
-import ApiClient, { swrResp } from "./client";
+import ApiClient, { swrResp } from "@lib/apiclient/client";
 import { ContextServiceCurrentResponse, ContextServiceClientImpl } from "@pb/controlplane/v1/context";
 import useSWR from 'swr'
 

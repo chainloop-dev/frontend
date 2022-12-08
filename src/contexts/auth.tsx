@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { ContextServiceCurrentResponse } from "@pb/controlplane/v1/context";
 import ApiClient from "@lib/apiclient/client";
 import { usePathname, useRouter } from "next/navigation";
-import { useCurrentUser as useCurrentUserAPI } from "@lib/apiclient/user-info";
+import { useCurrentUser as useCurrentUserAPI } from "@hooks/user-info";
 import { grpc } from "@improbable-eng/grpc-web";
 
 interface CurrentUser {

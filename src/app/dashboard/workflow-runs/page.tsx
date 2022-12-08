@@ -13,10 +13,10 @@ import {
 } from "@mui/material";
 import { WorkflowRunsListResults } from "@components/workflow-runs-list/result/result";
 import { useAuth } from "@contexts/auth";
-import { useWorkflows } from "@lib/apiclient/workflows";
+import { useWorkflows } from "@hooks/workflows";
 import { Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { namespacedName } from "@lib/workflow-run-utils";
+import { namespacedName } from "@utils/workflow-run";
 
 export default function WorkflowRunsList({}: {}) {
   const router = useRouter();

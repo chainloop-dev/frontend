@@ -16,7 +16,7 @@ import WorkflowRunStatus from "../../../../run-status";
 import { IStatus } from "../../../../run-status/run-status";
 import RunnerTypeIcon from "../../../../runner-type-icon";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { humanizeRunnerType } from "@lib/workflow-run-utils";
+import { humanizedRunnerType } from "@utils/workflow-run";
 
 export const WorkflowRunSummary = ({ run }: { run: WorkflowRunItem }) => {
   return (
@@ -77,7 +77,7 @@ export const WorkflowRunSummary = ({ run }: { run: WorkflowRunItem }) => {
                       >
                         <RunnerTypeIcon runnerType={run.runnerType} />
                         <Typography sx={{ pl: "5px" }}>
-                          {humanizeRunnerType(run.runnerType)}
+                          {humanizedRunnerType(run.runnerType)}
                         </Typography>
                       </Button>
                     )}

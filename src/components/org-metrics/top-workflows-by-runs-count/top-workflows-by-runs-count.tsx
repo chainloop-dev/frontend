@@ -2,8 +2,8 @@ import { useAuth } from "@contexts/auth";
 import {
   TimeWindow,
   useOrgTopWorkflowsByRunCountMetrics,
-} from "@lib/apiclient/metrics";
-import { namespacedName, statusColor } from "@lib/workflow-run-utils";
+} from "@hooks/metrics";
+import { namespacedName, statusColor } from "@utils/workflow-run";
 import {
   Card,
   CardContent,

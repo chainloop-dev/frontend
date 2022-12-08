@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import ApiClient, { swrResp } from "./client";
+import ApiClient, { swrResp } from "@lib/apiclient/client";
 import { WorkflowRunServiceClientImpl, WorkflowRunServiceListRequest, WorkflowRunServiceListResponse, WorkflowRunServiceViewResponse } from '@pb/controlplane/v1/workflowrun';
 import { PaginationRequest } from '@pb/controlplane/v1/pagination';
 

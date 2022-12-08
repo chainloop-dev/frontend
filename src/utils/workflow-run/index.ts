@@ -20,7 +20,7 @@ export const statusColor = (theme: Theme, state: string) => {
   return c;
 };
 
-export const humanizeRunnerType = (runnerType: string): string => {
+export const humanizedRunnerType = (runnerType: string): string => {
   switch (runnerType) {
     case "GITHUB_ACTION":
       return "Github Action";

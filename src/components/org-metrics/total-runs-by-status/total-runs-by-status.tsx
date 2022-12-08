@@ -7,9 +7,9 @@ import {
   Cell,
   Legend,
 } from "recharts";
-import { statusColor } from "@lib/workflow-run-utils";
+import { statusColor } from "@utils/workflow-run";
 import { CSSProperties } from "react";
-import { TimeWindow } from "@lib/apiclient/metrics";
+import { TimeWindow } from "@hooks/metrics";
 
 interface Props {
   total: { [key: string]: number };

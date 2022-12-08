@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import ApiClient, { swrResp } from "./client";
+import ApiClient, { swrResp } from "@lib/apiclient/client";
 import { OrgMetricsServiceTotalsRequest, OrgMetricsServiceTotalsResponse, OrgMetricsServiceClientImpl, MetricsTimeWindow, TopWorkflowsByRunsCountRequest, TopWorkflowsByRunsCountResponse } from "@pb/controlplane/v1/orgmetrics";
 
 export enum TimeWindow {

@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import { PieChart, Pie, ResponsiveContainer, Tooltip, Legend } from "recharts";
-import { humanizeRunnerType } from "@lib/workflow-run-utils";
-import { TimeWindow } from "@lib/apiclient/metrics";
+import { humanizedRunnerType } from "@utils/workflow-run";
+import { TimeWindow } from "@hooks/metrics";
 import { CSSProperties } from "react";
 
 interface Props {
@@ -24,7 +24,7 @@ export const TotalRunsByRunnerType = (props: Props) => {
 
   for (const status in props.total) {
     data.push({
-      name: humanizeRunnerType(status),
+      name: humanizedRunnerType(status),
       value: getPercent(props.total[status], total),
     });
   }

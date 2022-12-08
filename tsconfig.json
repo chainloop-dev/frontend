@@ -23,7 +23,9 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@lib/*": ["src/lib/*"],
+      "@utils/*": ["src/utils/*"],
       "@contexts/*": ["src/contexts/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@pb/*": ["src/pbgen/*"],
       "@assets/*": ["src/assets/*"]
     }

@@ -1,5 +1,5 @@
 import { useAuth } from "@contexts/auth";
-import { TimeWindow, useOrgTotalsMetrics } from "@lib/apiclient/metrics";
+import { TimeWindow, useOrgTotalsMetrics } from "@hooks/metrics";
 import {
   Box,
   Grid,
@@ -11,7 +11,7 @@ import {
 import TotalRuns from "./total-runs";
 import TotalRunsByRunnerType from "./total-runs-by-runner-type";
 import TotalRunsByStatus from "./total-runs-by-status";
-import { statusColor } from "@lib/workflow-run-utils";
+import { statusColor } from "@utils/workflow-run";
 import TopWorkflowsByRunsCount from "./top-workflows-by-runs-count";
 import { Suspense, useState } from "react";
 

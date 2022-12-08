@@ -10,10 +10,7 @@ import { useState } from "react";
 import RunsListSidebar from "./list-sidebar";
 import RunDetail from "./detail";
 import { useAuth } from "@contexts/auth";
-import {
-  IRunsListOpts,
-  useWorkflowRunsList,
-} from "@lib/apiclient/workflow-runs";
+import { IRunsListOpts, useWorkflowRunsList } from "@hooks/workflow-runs";
 
 export const WorkflowRuns = ({ workflowID }: { workflowID: string }) => {
   const [currentRunID, setCurrentRunID] = useState("");

@@ -1,4 +1,4 @@
-import ApiClient, { swrResp } from "./client";
+import ApiClient, { swrResp } from "@lib/apiclient/client";
 import { InfozResponse, StatusServiceClientImpl } from "@pb/controlplane/v1/status";
 import useSWR from 'swr'
 

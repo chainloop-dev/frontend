@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-  #  tags:
-  #    - "v*.*.*"
+    tags:
+      - "v*.*.*"
 
 env:
   REGISTRY: ghcr.io
@@ -16,7 +16,7 @@ jobs:
       CHAINLOOP_ROBOT_ACCOUNT: ${{ secrets.CHAINLOOP_WF_RELEASE }}
     name: Release Frontend Container Image
     runs-on: ubuntu-latest
-    #if: github.ref_type == 'tag' # Guard to make sure we are releasing once
+    if: github.ref_type == 'tag' # Guard to make sure we are releasing once
     permissions:
       packages: write
       contents: read # required for docker env setup

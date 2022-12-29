@@ -61,11 +61,23 @@ jobs:
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
 
-      - name: Add Attestation Artifacts
-        run: |
-          chainloop attestation add --name frontend --value  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${DIGEST}
+      - uses: anchore/sbom-action@v0
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ env.DIGEST }}
+          format: cyclonedx-json
+          artifact-name: frontend.cyclonedx.json
+          output-file: /tmp/sbom.frontend.cyclonedx.json
         env:
           DIGEST: ${{ steps.docker_build.outputs.digest }}
+
+      - name: Add Container Image Artifact
+        run: |
+          chainloop attestation add --name frontend --value  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ env.DIGEST }}
+        env:
+          DIGEST: ${{ steps.docker_build.outputs.digest }}
+
+      - name: Add SBOM Artifact
+        run: chainloop attestation add --name frontend-sbom --value /tmp/sbom.frontend.cyclonedx.json
 
       - name: Sign image
         run: |

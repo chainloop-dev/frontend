@@ -12,7 +12,7 @@ env:
 jobs:
   release:
     env:
-      CL_VERSION: 0.8.29
+      CL_VERSION: 0.8.51
       CHAINLOOP_ROBOT_ACCOUNT: ${{ secrets.CHAINLOOP_WF_RELEASE }}
     name: Release Frontend Container Image
     runs-on: ubuntu-latest
@@ -24,11 +24,6 @@ jobs:
     steps:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v2.5.0
-
-      - name: Write Cosign key
-        run: echo "$COSIGN_KEY" > /tmp/cosign.key
-        env:
-          COSIGN_KEY: ${{ secrets.COSIGN_KEY }}
 
       - name: Install ChainLoop
         run: |
@@ -84,8 +79,9 @@ jobs:
         if: ${{ success() }}
         run: |
           chainloop attestation status --full
-          chainloop attestation push --key /tmp/cosign.key --graceful-exit=false
+          chainloop attestation push --key env://CHAINLOOP_SIGNING_KEY --graceful-exit=false
         env:
+          CHAINLOOP_SIGNING_KEY: ${{ secrets.COSIGN_KEY }}
           CHAINLOOP_SIGNING_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
       - name: Mark attestation as failed

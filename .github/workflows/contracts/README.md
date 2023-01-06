@@ -1,3 +1,3 @@
-This directory contains a copy of the workflow contracts that are being used to communicate with ChainLoop.
+This directory contains a copy of the workflow contracts that are being used to communicate with Chainloop.
 
 see https://docs.chainloop.dev/reference/operator/contract

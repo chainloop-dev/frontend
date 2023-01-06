@@ -82,7 +82,7 @@ export const DashboardSidebar = (props) => {
                 underline="none"
                 color="inherit"
               >
-                <Typography variant="subtitle1">ChainLoop</Typography>
+                <Typography variant="subtitle1">Chainloop</Typography>
               </MaterialLink>
             </Grid>
           </Grid>

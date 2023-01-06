@@ -1,6 +1,6 @@
-# ChainLoop UI frontend source code
+# Chainloop UI frontend source code
 
-Work-in-progress web interface for the [ChainLoop project](https://chainloop.dev/).
+Work-in-progress web interface for the [Chainloop project](https://chainloop.dev/).
 
 Some of the functionality is not implemented yet. For now, to complete the experience you can pair it with the existing [Command Line Tool](https://docs.chainloop.dev/getting-started/installation)
 
@@ -14,7 +14,7 @@ The UI is built on top of react + nextjs so the following requirements need to b
 - `nvm use`
 - `yarn`
 
-The UI connects to a ChainLoop Control Plane backend through `grpc`. It comes pre-configured pointing to ChainLoops production server but it can be changed by modifying [`.env.development`](.env.development) and [`.env.production`](.env.production) environment files.
+The UI connects to a Chainloop Control Plane backend through `grpc`. It comes pre-configured pointing to Chainloops production server but it can be changed by modifying [`.env.development`](.env.development) and [`.env.production`](.env.production) environment files.
 
 ### Run development server
 
